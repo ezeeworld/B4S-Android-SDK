@@ -1,0 +1,14 @@
+# System:
+.DS_Store
+*.swp
+Desktop.ini
+
+# Eclipse:
+.classpath
+.project
+
+# Android:
+bin
+gen
+.settings/
+
