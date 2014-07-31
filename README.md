@@ -16,8 +16,10 @@ The SDK depends on the Jackson, Linear Algebra for Java libraries and EventBus l
 ### Add jar libraries
 1. Open your application in Eclipse
 2. Drop the jar files found in `sdk/libs` directly into the `libs` fodler of your existing Android project.
-3. Import the Google Play Services library project. If not installed yet, use the Adroid SDK Manager to install this (currently at version 18). It is advised to copy the library project to your local directory from `android-sdk/extras/google/google_play_services/libproject`. Import the `google-play-services_lib` directory using Existing Android Code Into Workspace wizard. Make sure it is marked as Library Project in the Android properties.
-4. Open the properties page of your Android project and add teh for the google-play-services_lib as library project dependency. The jar files in `libs` should already be adopted into your Android Private Libraries build..
+
+### Add Google Play Services
+1. Import the Google Play Services library project. If not installed yet, use the Adroid SDK Manager to install this (currently at version 18). It is advised to copy the library project to your local directory from `android-sdk/extras/google/google_play_services/libproject`. Import the `google-play-services_lib` directory using File -> Import... -> Existing Android Code Into Workspace wizard. Make sure it is marked as Library Project in the Android properties.
+2. Open the properties page of your Android project and add teh for the google-play-services_lib as library project dependency. The jar files in `libs` should already be adopted into your Android Private Libraries build..
 
 ## Usage
 
@@ -99,10 +101,13 @@ To simply show a user notification every time a message is broadcasted, implemen
 				.setContentTitle(title)
 				.setContentText(message)
 				.setAutoCancel(true)
-				.setVibrate(new long[] { 0, 500 })
 				.build());
 ```
 As normal, the notifications can be extended with sounds, vibrations, etc.
+
+## Sample application
+
+A minimal sample application is included in the `sample` directory of this repo. It implements the notification system described above and includes some optional optimalizations, such as the changing of scan frequency settings (in `SampleApplication`) and a richer notification (in the `B4SNotificationReceiver`). Note that it will not run correctly until the application ID has been replaced from `MY-APP-ID` to your unique ID as provided by Ezeeworld.
 
 ## Copyright
 
