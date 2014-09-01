@@ -33,6 +33,7 @@ The SDK depends on the Jackson, Linear Algebra for Java libraries and EventBus l
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 	<uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
 ```
 3. For location updates the Google Play Services requires some meta data in the `<application>` tag.
@@ -77,6 +78,7 @@ and in the `Application` instance (here `SampleApp`) `onCreate` method call `ini
 		B4SSettings.init(this, "MY-APP-ID", "1");
 		MonitoringManager.ensureMonitoringService(this);
 ```
+Logging is turned off by default; use the `B4SSettings` object returned on initialization to enable debugging (using `setShouldLogDebug`) as well as to change various other settings.
 
 ### Receive notifications
 
@@ -84,10 +86,13 @@ The SDK sends broadcats to yur application when a beacon is matched, such that y
 
 As specified above in the `AndroidManifest.xml` we define a `B4SNotificationReceiver` which parses the notifications. This extends from `BroadcastReceiver` directly and on the `onReceive` method the broadcasted messages are received as `Intent`s. At the moment every `Intent` will contain:
 
-- `MonitoringManager.INTENT_SHOW` - Unique ID of the interaction that was matched
-- `MonitoringManager.INTENT_TITLE` - Interaction name
-- `MonitoringManager.INTENT_MESSAGE` - Interaction message, in which customer name, beacon name, shop name, etc. were already substituted
-- `MonitoringManager.INTENT_DATA` - Possibly a data string, often a piece of JSON encoded data
+- `MonitoringManager.INTENT_SHOW` - (int) Hash code of the interaction that was matched
+- `MonitoringManager.INTENT_INTERACTION` - (String) Unique ID of the interaction that was matched
+- `MonitoringManager.INTENT_TITLE` - (String) Interaction name
+- `MonitoringManager.INTENT_BEACONNAME` - (String) Unique name of the matched beacon
+- `MonitoringManager.INTENT_TITLE` - (String) Interaction name
+- `MonitoringManager.INTENT_MESSAGE` - (String) Interaction message, in which customer name, beacon name, shop name, etc. were already substituted
+- `MonitoringManager.INTENT_DATA` - (String) Possibly a data string, often a piece of JSON encoded data
 
 To simply show a user notification every time a message is broadcasted, implement in your `onReceive`:
 ```java

@@ -16,10 +16,12 @@ public class SampleApp extends Application {
 		
 		// Adjust the settings to our needs
 		B4SSettings settings = B4SSettings.from(getApplicationContext());
-		settings.setMonitorScanDuration(400);
-		settings.setMonitorHandleInterval(800);
-		settings.setMonitorRangingInterval(1200);
-		settings.setMonitorBackgroundInterval(60000);
+		settings.setMonitorScanDuration(200);
+		settings.setMonitorHandleInterval(2000);
+		settings.setMonitorRangingInterval(5000);
+		settings.setMonitorBackgroundInterval(300000);
+		settings.setShouldLogDebug(true);
+		settings.setShouldLogVerbose(true);
 		
 		// Start the monitoring service, if needed
 		MonitoringManager.ensureMonitoringService(this);
