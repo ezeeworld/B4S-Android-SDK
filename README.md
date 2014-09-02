@@ -34,7 +34,7 @@ The SDK depends on the Jackson, Linear Algebra for Java libraries and EventBus l
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-	<uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
+	<uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
 ```
 3. For location updates the Google Play Services requires some meta data in the `<application>` tag.
 ```xml
