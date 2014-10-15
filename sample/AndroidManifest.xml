@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.ezeeworld.b4s.android.sample"
-	android:versionCode="1"
-	android:versionName="0.1" >
+	android:versionCode="2"
+	android:versionName="0.2" >
 
 	<uses-sdk
 		android:minSdkVersion="18"
@@ -49,6 +49,11 @@
 				<action android:name="android.intent.action.BOOT_COMPLETED" />
 			</intent-filter>
 		</receiver>
+		
+		<activity
+			android:name="com.ezeeworld.b4s.android.sdk.monitor.WebViewInteractionActivity"
+			android:configChanges="orientation|keyboardHidden"
+			android:noHistory="true" />
 
 		<!-- Google Play Location Services meta data -->
 		<meta-data

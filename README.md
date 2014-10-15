@@ -26,7 +26,7 @@ The SDK depends on the Jackson, Linear Algebra for Java libraries and EventBus l
 ### Configure the SDK
 
 1. Open your project AndroidManifest.xml
-2. Add the required permissions for access to internet, Bluetooth BLE, location and the boot receiver:
+2. Add the required permissions for access to internet, Bluetooth LE, location and the boot receiver:
 ```xml
 	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -67,6 +67,13 @@ The SDK depends on the Jackson, Linear Algebra for Java libraries and EventBus l
 			</intent-filter>
 		</receiver>
 ```
+If you use the layer-style notifications for interactions where a web view is opened as in-app activity, also add the web view SDK activity to your manifest.
+```xml
+		<activity
+			android:name="com.ezeeworld.b4s.android.sdk.monitor.WebViewInteractionActivity"
+			android:configChanges="orientation|keyboardHidden"
+			android:noHistory="true" />
+```
 7. The B4S SDK required initialization of the library with the unique application ID (provided by Ezeeworld). It is suggested to do so in the application object. Make sure the application object refers to the `Application` object first.
 ```xml
 	<application
@@ -82,17 +89,20 @@ Logging is turned off by default; use the `B4SSettings` object returned on initi
 
 ### Receive notifications
 
-The SDK sends broadcats to yur application when a beacon is matched, such that your application can itself generate the proper notification for the user.
+By default the SDK will generate interaction notifications directly, such as web links. For custom interactions, the SDK sends broadcasts to your application when a beacon is matched, such that your application can itself perform an appropriate action, such as generate the proper notification for the user.
 
 As specified above in the `AndroidManifest.xml` we define a `B4SNotificationReceiver` which parses the notifications. This extends from `BroadcastReceiver` directly and on the `onReceive` method the broadcasted messages are received as `Intent`s. At the moment every `Intent` will contain:
 
 - `MonitoringManager.INTENT_SHOW` - (int) Hash code of the interaction that was matched
 - `MonitoringManager.INTENT_INTERACTION` - (String) Unique ID of the interaction that was matched
-- `MonitoringManager.INTENT_TITLE` - (String) Interaction name
-- `MonitoringManager.INTENT_BEACONNAME` - (String) Unique name of the matched beacon
-- `MonitoringManager.INTENT_TITLE` - (String) Interaction name
-- `MonitoringManager.INTENT_MESSAGE` - (String) Interaction message, in which customer name, beacon name, shop name, etc. were already substituted
+- `MonitoringManager.INTENT_TITLE` - (String) Message title, defaults to interaction name if no custom title was supplied
+- `MonitoringManager.INTENT_MESSAGE` - (String) Message, in which customer name, beacon name, shop name, etc. were already substituted
 - `MonitoringManager.INTENT_DATA` - (String) Possibly a data string, often a piece of JSON encoded data
+- `MonitoringManager.INTENT_SHOPNAME` - (String) Name of the interaction's shop
+- `MonitoringManager.INTENT_GROUPNAME` - (String) Name of the interaction's group
+- `MonitoringManager.INTENT_BEACONNAME` - (String) Name of the matched beacon as configured in the SDK
+- `MonitoringManager.INTENT_BEACONID` - (IBeaconID) Beacon identification, including technical name (B4S:XXXX:XXXX), UDID, major and minor
+- `MonitoringManager.INTENT_DISTANCE` - (double) Distance estimate in meters
 
 To simply show a user notification every time a message is broadcasted, implement in your `onReceive`:
 ```java
@@ -110,9 +120,11 @@ To simply show a user notification every time a message is broadcasted, implemen
 ```
 As normal, the notifications can be extended with sounds, vibrations, etc.
 
+Special care needs to be taken if the SDK-generated notifications should be shown as pop-up when using the application in the foreground, rather than as Android notification. To implement this behaviour, every `Activity` in which notification popups are allowed should extend from the `B4SNotificationActivity` base class. Alternatively, if your activity already extends another class, you may instantiate a `B4SNotificationPopup` instance in the `onCreate` method and call through its `onResume` and `onPause` methods appropriatedly.
+
 ## Sample application
 
-A minimal sample application is included in the `sample` directory of this repo. It implements the notification system described above and includes some optional optimalizations, such as the changing of scan frequency settings (in `SampleApplication`) and a richer notification (in the `B4SNotificationReceiver`). Note that it will not run correctly until the application ID has been replaced from `MY-APP-ID` to your unique ID as provided by Ezeeworld.
+A minimal sample application is included in the `sample` directory of this repo. It implements the notification system described above and includes some optional optimalizations, such as the changing of scan frequency settings (in `SampleApplication`), a richer notification (in the `B4SNotificationReceiver`) and foreground notification popup support (in `LaunchActivity`). Note that it will not run correctly until the application ID has been replaced from `MY-APP-ID` to your unique ID as provided by Ezeeworld.
 
 ## Copyright
 

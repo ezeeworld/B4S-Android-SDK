@@ -1,11 +1,11 @@
 package com.ezeeworld.b4s.android.sdk.sample;
 
-import com.ezeeworld.b4s.android.sample.R;
-
-import android.app.Activity;
 import android.os.Bundle;
 
-public class LaunchActivity extends Activity {
+import com.ezeeworld.b4s.android.sample.R;
+import com.ezeeworld.b4s.android.sdk.monitor.B4SNotificationActivity;
+
+public class LaunchActivity extends B4SNotificationActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
