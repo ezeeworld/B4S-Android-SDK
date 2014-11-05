@@ -12,3 +12,10 @@ bin
 gen
 .settings/
 
+# Android Studio/Gradle
+.gradle
+/local.properties
+.idea
+build/
+*.iml
+
