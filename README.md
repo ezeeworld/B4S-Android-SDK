@@ -14,7 +14,7 @@ The SDK depends on the Jackson, Linear Algebra for Java libraries and EventBus l
 ## Installation
 
 ### Add jar libraries
-1. Open your application in Eclipse
+1. Open your application project
 2. Drop the jar files found in `sdk/libs` directly into the `libs` fodler of your existing Android project.
 
 ### Add Google Play Services
@@ -28,12 +28,14 @@ The SDK depends on the Jackson, Linear Algebra for Java libraries and EventBus l
 1. Open your project AndroidManifest.xml
 2. Add the required permissions for access to internet, Bluetooth LE, location and the boot receiver:
 ```xml
+	<permission android:name="com.ezeeworld.b4s.android.sdk.monitor.MONITOR_PERMISSION" />
 	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+	<uses-permission android:name="com.ezeeworld.b4s.android.sdk.monitor.MONITOR_PERMISSION" />
 	<uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
 ```
 3. For location updates the Google Play Services requires some meta data in the `<application>` tag.
@@ -42,11 +44,29 @@ The SDK depends on the Jackson, Linear Algebra for Java libraries and EventBus l
            android:value="@integer/google_play_services_version" />
 ```
 
-4. Add the B4S `MonitoringService` to the `<application>` element to allow background scanning for beacons.
+4. Add the B4S services to the `<application>` element to allow background scanning for beacons.
 ```xml
 		<service
-			android:name="com.ezeeworld.b4s.android.sdk.monitor.MonitoringService"
+			android:name="com.ezeeworld.b4s.android.sdk.monitor.MonitoringManager"
+			android:exported="true"
+			android:permission="com.ezeeworld.b4s.android.sdk.monitor.MONITOR_PERMISSION">
+			<intent-filter>
+				<action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_ENSURE_SCANNING" />
+				<action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_QUERY_SCHEDULE" />
+				<action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_SCHEDULE_RESULT" />
+			</intent-filter>
+		</service>
+		<service
+			android:name="com.ezeeworld.b4s.android.sdk.monitor.ScanService"
 			android:exported="false" />
+		<service
+			android:name="com.ezeeworld.b4s.android.sdk.monitor.InteractionService"
+			android:exported="true"
+			android:permission="com.ezeeworld.b4s.android.sdk.monitor.MONITOR_PERMISSION">
+			<intent-filter>
+				<action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_OBSERVATIONS" />
+			</intent-filter>
+		</service>
 ```
 5. It is recommended to add the B4S `SystemEventReceiver` to ensure the background scanning is started when the device is rebooted.
 ```xml
