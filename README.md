@@ -111,7 +111,7 @@ Logging is turned off by default; use the `B4SSettings` object returned on initi
 
 By default the SDK will generate interaction notifications directly, such as web links. For custom interactions, the SDK sends broadcasts to your application when a beacon is matched, such that your application can itself perform an appropriate action, such as generate the proper notification for the user.
 
-As specified above in the `AndroidManifest.xml` we define a `B4SNotificationReceiver` which parses the notifications. This extends from `BroadcastReceiver` directly and on the `onReceive` method the broadcasted messages are received as `Intent`s. At the moment every `Intent` will contain:
+As specified above, in the `AndroidManifest.xml` we define a `B4SNotificationReceiver` which parses the notifications. This extends from `BroadcastReceiver` directly and on the `onReceive` method the broadcasted messages are received as `Intent`s. At the moment every `Intent` will contain:
 
 - `MonitoringManager.INTENT_SHOW` - (int) Hash code of the interaction that was matched
 - `MonitoringManager.INTENT_INTERACTION` - (String) Unique ID of the interaction that was matched

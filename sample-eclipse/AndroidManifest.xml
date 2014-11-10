@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.ezeeworld.b4s.android.sample"
-	android:versionCode="2"
-	android:versionName="0.2" >
+	android:versionCode="3"
+	android:versionName="0.3" >
 
 	<uses-sdk
 		android:minSdkVersion="18"
 		android:targetSdkVersion="19" />
+
+	<permission android:name="com.ezeeworld.b4s.android.sdk.monitor.MONITOR_PERMISSION" />
 
 	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	<uses-permission android:name="com.ezeeworld.b4s.android.sdk.monitor.MONITOR_PERMISSION" />
 
-	<uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
+	<uses-feature
+		android:name="android.hardware.bluetooth_le"
+		android:required="false" />
 	
 	<application
 		android:name="com.ezeeworld.b4s.android.sdk.sample.SampleApp"
@@ -40,8 +45,26 @@
 		
 		<!-- Background monitoring for beacons -->
 		<service
-			android:name="com.ezeeworld.b4s.android.sdk.monitor.MonitoringService"
+			android:name="com.ezeeworld.b4s.android.sdk.monitor.MonitoringManager"
+			android:exported="true"
+			android:permission="com.ezeeworld.b4s.android.sdk.monitor.MONITOR_PERMISSION">
+			<intent-filter>
+				<action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_ENSURE_SCANNING" />
+				<action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_QUERY_SCHEDULE" />
+				<action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_SCHEDULE_RESULT" />
+			</intent-filter>
+		</service>
+		<service
+			android:name="com.ezeeworld.b4s.android.sdk.monitor.ScanService"
 			android:exported="false" />
+		<service
+			android:name="com.ezeeworld.b4s.android.sdk.monitor.InteractionService"
+			android:exported="true"
+			android:permission="com.ezeeworld.b4s.android.sdk.monitor.MONITOR_PERMISSION">
+			<intent-filter>
+				<action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_OBSERVATIONS" />
+			</intent-filter>
+		</service>
 
 		<receiver android:name="com.ezeeworld.b4s.android.sdk.monitor.SystemEventReceiver" >
 			<intent-filter>

@@ -16,10 +16,9 @@ public class SampleApp extends Application {
 
 		// Adjust the settings to our needs
 		B4SSettings settings = B4SSettings.from(getApplicationContext());
-		settings.setMonitorScanDuration(200); // 200ms scan bursts
-		settings.setMonitorHandleInterval(2000); // Scan for 2 seconds
+		settings.setMonitorScanDuration(500); // 500ms scan bursts
+		settings.setMonitorHandleInterval(2 * 1000); // Scan for 2 seconds
 		settings.setMonitorRangingInterval(5 * 1000); // 5 second interval
-		settings.setMonitorBackgroundInterval(5 * 60 * 1000); // 5 minute interval
 		settings.setShouldEnforceBluetooth(true); // Turn on Bluetooth when required for background scanning
 		settings.setShouldLogDebug(true);
 		settings.setShouldLogVerbose(true);
