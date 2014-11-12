@@ -7,7 +7,7 @@ Beacon4Store SDK for Android, by Ezeeworld, see www.beacon4store.com
 
 The B4S SDK uses **Bluetooth 4.0 BLE**, also called Low Energy or Bluetooth Smart Ready. It is available on most new Android devices, with a minimum of **Android 4.3**. Almost all popular newer devices are supported, such as Samsung's Galaxy S3/4/5 and variants, Note 2/3/10.1, LG G2/G3/Nexus 4/Nexus5, Moto G/E/X, HTC One and variants, Sony Z/Z1/Z2 and variants and many more.
 
-The B4S SDK is a compiled JAR that can be dropped (together with its dependencies) directly into the `libs` folder in Eclipse, Andorid Studio or compiled with Ant. The SDK is currently targetting API level 19 (Android 4.4) with minimal API level 18 (Android 4.3) for Bluetooth BLE support.
+The B4S SDK is a compiled JAR that can be dropped (together with its dependencies) directly into the `libs` folder in Eclipse, Android Studio or compiled with Ant. The SDK is currently targetting API level 19 (Android 4.4) with minimal API level 18 (Android 4.3) for Bluetooth BLE support.
 
 The SDK depends on the Jackson, Linear Algebra for Java libraries and EventBus libraries, which are all Apache License 2.0-licensed. Finally, it depends on the Google Play Services for its Location Services support. See instructions below how to obtain and add this, as it is not included in the SDK package.
 
@@ -15,9 +15,19 @@ The SDK depends on the Jackson, Linear Algebra for Java libraries and EventBus l
 
 ### Add jar libraries
 1. Open your application project
-2. Drop the jar files found in `sdk/libs` directly into the `libs` fodler of your existing Android project.
+2. Drop the jar files found in `sdk/libs` directly into the `libs` folder of your existing Android project. When using Gradle to build you may use the following Maven dependencies instead of the separate jar files:
+```gradle
+dependencies {
+    compile 'de.greenrobot:eventbus:2.2.1'
+    compile 'org.codehaus.jackson:jackson-core-asl:1.9.13'
+    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+    compile 'org.la4j:la4j:0.4.9'
+    compile 'com.google.android.gms:play-services:6.1.+'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+```
 
-### Add Google Play Services
+### Add Google Play Services (Eclipse/Ant)
 1. Import the Google Play Services library project. If not installed yet, use the Adroid SDK Manager to install this (currently at version 18). It is advised to copy the library project to your local directory from `android-sdk/extras/google/google_play_services/libproject`. Import the `google-play-services_lib` directory using File -> Import... -> Existing Android Code Into Workspace wizard. Make sure it is marked as Library Project in the Android properties.
 2. Open the properties page of your Android project and add teh for the google-play-services_lib as library project dependency. The jar files in `libs` should already be adopted into your Android Private Libraries build..
 
@@ -102,7 +112,8 @@ If you use the layer-style notifications for interactions where a web view is op
 ```
 and in the `Application` instance (here `SampleApp`) `onCreate` method call `init` and make sure the `MonitoringService` runs upon the first app start. Replace `MY-APP-ID` with your unique application ID.
 ```java
-		B4SSettings.init(this, "MY-APP-ID", "1");
+		B4SSettings settings = B4SSettings.from(getApplicationContext());
+		settings.setShouldEnforceBluetooth(true); // Turn on Bluetooth when required for background scanning (true by default)
 		MonitoringManager.ensureMonitoringService(this);
 ```
 Logging is turned off by default; use the `B4SSettings` object returned on initialization to enable debugging (using `setShouldLogDebug`) as well as to change various other settings.
