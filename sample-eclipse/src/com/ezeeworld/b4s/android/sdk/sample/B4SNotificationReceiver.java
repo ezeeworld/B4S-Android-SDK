@@ -11,6 +11,10 @@ import android.util.Log;
 import com.ezeeworld.b4s.android.sample.R;
 import com.ezeeworld.b4s.android.sdk.monitor.MonitoringManager;
 
+/**
+ * An example receiver of interaction matches that are not handled by the SDK. This gives full flexibility on the performed action, but no
+ * automatic generation of popups and notifications is provided. This example just shows a notification with the supplied data.
+ */
 public class B4SNotificationReceiver extends BroadcastReceiver {
 
 	@Override
@@ -19,13 +23,9 @@ public class B4SNotificationReceiver extends BroadcastReceiver {
 		if (intent == null || intent.getAction() == null || intent.getExtras() == null)
 			return;
 
-		// Message that a sticky notification should be removed?
-		if (intent.hasExtra(MonitoringManager.INTENT_REMOVE)) {
-			cancelNotification(context, intent.getIntExtra(MonitoringManager.INTENT_REMOVE, -1));
-		}
-
 		// Message that a new notification should be displayed?
 		if (intent.hasExtra(MonitoringManager.INTENT_SHOW)) {
+			// See GitHub for all data that is provided in the Intent extras
 			showNotification(context, intent.getIntExtra(MonitoringManager.INTENT_SHOW, -1),
 					intent.getStringExtra(MonitoringManager.INTENT_TITLE),
 					intent.getStringExtra(MonitoringManager.INTENT_MESSAGE),
@@ -34,15 +34,8 @@ public class B4SNotificationReceiver extends BroadcastReceiver {
 
 	}
 
-	private void cancelNotification(Context context, int id) {
-
-		((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).cancel(id);
-
-	}
-
 	private void showNotification(Context context, int id, String title, String message, String data) {
 
-		Log.i("B4S", "Showing notification " + id + ": " + message);
 		NotificationManager notifications = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 
