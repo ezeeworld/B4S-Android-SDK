@@ -7,6 +7,8 @@ Beacon4Store SDK for Android, by Ezeeworld, see www.beacon4store.com
 
 The B4S SDK uses **Bluetooth 4.0 BLE**, also called Low Energy or Bluetooth Smart Ready. It is available on most new Android devices, with a minimum of **Android 4.3**. Almost all popular newer devices are supported, such as Samsung's Galaxy S3/4/5 and variants, Note 2/3/10.1, LG G2/G3/Nexus 4/Nexus5, Moto G/E/X, HTC One and variants, Sony Z/Z1/Z2 and variants and many more.
 
+`BluetoothHelper.isAvailable(context)` may be used to determine (and report to the user) compatibility of the device with the B4S SDK and adjust the UI or display a message to your user accordingly.
+
 The B4S SDK is a compiled JAR that can be dropped (together with its dependencies) directly into the `libs` folder in Eclipse, Android Studio or compiled with Ant. The SDK is currently targetting API level 19 (Android 4.4) with minimal API level 18 (Android 4.3) for Bluetooth BLE support.
 
 The SDK depends on the Jackson, Linear Algebra for Java libraries and EventBus libraries, which are all Apache License 2.0-licensed. Finally, it depends on the Google Play Services for its Location Services support. See instructions below how to obtain and add this, as it is not included in the SDK package.
@@ -87,7 +89,14 @@ dependencies {
 			</intent-filter>
 		</receiver>
 ```
-6. Your application will be send broadcast messages when the B4S SDK registers a matched interaction. Add to an existing broadcast receiver or create a new one to catch these. An example is given below that will show user notifications.
+6. If you use the layer-style notifications for interactions where a web view is opened as in-app activity, also add the web view SDK activity to your manifest.
+```xml
+		<activity
+			android:name="com.ezeeworld.b4s.android.sdk.monitor.WebViewInteractionActivity"
+			android:configChanges="orientation|keyboardHidden"
+			android:noHistory="true" />
+```
+Only if you  do not use the default B4S notifications (rich push, web layer, deep linking) and instead want to receive any matched interaction as broadcast, you may register a broadcast receiver to catch these. An example is given below that will show user notifications.
 ```xml
 		<receiver
 			android:name="com.ezeeworld.b4s.android.sdk.sample.B4SNotificationReceiver"
@@ -97,13 +106,6 @@ dependencies {
 			</intent-filter>
 		</receiver>
 ```
-If you use the layer-style notifications for interactions where a web view is opened as in-app activity, also add the web view SDK activity to your manifest.
-```xml
-		<activity
-			android:name="com.ezeeworld.b4s.android.sdk.monitor.WebViewInteractionActivity"
-			android:configChanges="orientation|keyboardHidden"
-			android:noHistory="true" />
-```
 7. The B4S SDK required initialization of the library with the unique application ID (provided by Ezeeworld). It is suggested to do so in the application object. Make sure the application object refers to the `Application` object first.
 ```xml
 	<application
@@ -112,17 +114,15 @@ If you use the layer-style notifications for interactions where a web view is op
 ```
 and in the `Application` instance (here `SampleApp`) `onCreate` method call `init` and make sure the `MonitoringService` runs upon the first app start. Replace `MY-APP-ID` with your unique application ID.
 ```java
-		B4SSettings settings = B4SSettings.from(getApplicationContext());
+		B4SSettings settings = B4SSettings.init(this, "MY-APP-ID", "1");
 		settings.setShouldEnforceBluetooth(true); // Turn on Bluetooth when required for background scanning (true by default)
 		MonitoringManager.ensureMonitoringService(this);
 ```
-Logging is turned off by default; use the `B4SSettings` object returned on initialization to enable debugging (using `setShouldLogDebug`) as well as to change various other settings.
+Logging is turned off by default; use the `B4SSettings` object returned on initialization to enable debugging (using `setShouldLogDebug` and `setShouldLogVerbose`) as well as to change various other settings.
 
-### Receive notifications
+### Deep links and custom broadcast intents
 
-By default the SDK will generate interaction notifications directly, such as web links. For custom interactions, the SDK sends broadcasts to your application when a beacon is matched, such that your application can itself perform an appropriate action, such as generate the proper notification for the user.
-
-As specified above, in the `AndroidManifest.xml` we define a `B4SNotificationReceiver` which parses the notifications. This extends from `BroadcastReceiver` directly and on the `onReceive` method the broadcasted messages are received as `Intent`s. At the moment every `Intent` will contain:
+By default the SDK will generate interaction notifications directly, such as web links. Deep links are send to the main activity of your application. The following Intent extras are available:
 
 - `MonitoringManager.INTENT_SHOW` - (int) Hash code of the interaction that was matched
 - `MonitoringManager.INTENT_INTERACTION` - (String) Unique ID of the interaction that was matched
@@ -130,12 +130,17 @@ As specified above, in the `AndroidManifest.xml` we define a `B4SNotificationRec
 - `MonitoringManager.INTENT_MESSAGE` - (String) Message, in which customer name, beacon name, shop name, etc. were already substituted
 - `MonitoringManager.INTENT_DATA` - (String) Possibly a data string, often a piece of JSON encoded data
 - `MonitoringManager.INTENT_SHOPNAME` - (String) Name of the interaction's shop
+- `MonitoringManager.INTENT_SHOPCLIENTREF` - (String) The free-form string set on the shop as client reference
 - `MonitoringManager.INTENT_GROUPNAME` - (String) Name of the interaction's group
 - `MonitoringManager.INTENT_BEACONNAME` - (String) Name of the matched beacon as configured in the SDK
 - `MonitoringManager.INTENT_BEACONID` - (IBeaconID) Beacon identification, including technical name (B4S:XXXX:XXXX), UDID, major and minor
 - `MonitoringManager.INTENT_DISTANCE` - (double) Distance estimate in meters
 
-To simply show a user notification every time a message is broadcasted, implement in your `onReceive`:
+For custom behaviour, in case none of the normal notification types are used, the SDK sends intent broadcasts to your application when a beacon is matched, such that your application can itself perform an appropriate action like generate the proper notification for the user or start an activity directly.
+
+As specified above, in the `AndroidManifest.xml` we define a `B4SNotificationReceiver` which parses the interaction matches. It should filter on the `com.ezeeworld.b4s.android.sdk.monitor.B4S_NOTIFICATION` action and extend from `BroadcastReceiver` directly such that in the `onReceive` method the broadcasted messages are received as `Intent`s. The same extras are bundled as with normal deep linking.
+
+For example, to simply show a user notification every time a message is broadcasted, implement in your `onReceive`:
 ```java
 		NotificationManager notifications = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -149,7 +154,6 @@ To simply show a user notification every time a message is broadcasted, implemen
 				.setAutoCancel(true)
 				.build());
 ```
-As normal, the notifications can be extended with sounds, vibrations, etc.
 
 Special care needs to be taken if the SDK-generated notifications should be shown as pop-up when using the application in the foreground, rather than as Android notification. To implement this behaviour, every `Activity` in which notification popups are allowed should extend from the `B4SNotificationActivity` base class. Alternatively, if your activity already extends another class, you may instantiate a `B4SNotificationPopup` instance in the `onCreate` method and call through its `onResume` and `onPause` methods appropriatedly.
 

@@ -31,14 +31,6 @@
 			</intent-filter>
 		</activity>
 
-		<receiver
-			android:name="com.ezeeworld.b4s.android.sdk.sample.B4SNotificationReceiver"
-			android:exported="false">
-			<intent-filter>
-				<action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_NOTIFICATION" />
-			</intent-filter>
-		</receiver>
-
 		<!-- Background monitoring for beacons -->
 		<service
 			android:name="com.ezeeworld.b4s.android.sdk.monitor.MonitoringManager"
