@@ -31,8 +31,8 @@ The SDK depends on the Jackson, Linear Algebra for Java libraries and EventBus l
    ```
 
 ### Add Google Play Services (Eclipse/Ant)
-1. Import the Google Play Services library project. If not installed yet, use the Adroid SDK Manager to install this (currently at version 18). It is advised to copy the library project to your local directory from `android-sdk/extras/google/google_play_services/libproject`. Import the `google-play-services_lib` directory using File -> Import... -> Existing Android Code Into Workspace wizard. Make sure it is marked as Library Project in the Android properties.
-2. Open the properties page of your Android project and add teh for the google-play-services_lib as library project dependency. The jar files in `libs` should already be adopted into your Android Private Libraries build..
+1. Import the Google Play Services library project. If not installed yet, use the Adroid SDK Manager to install this (currently at version 21). It is advised to copy the library project to your local directory from `android-sdk/extras/google/google_play_services/libproject`. Import the `google-play-services_lib` directory using File -> Import... -> Existing Android Code Into Workspace wizard. Make sure it is marked as Library Project in the Android properties.
+2. Open the properties page of your Android project and add the for the google-play-services_lib as library project dependency. The jar files in `libs` should already be adopted into your Android Private Libraries build.
 
 ## Usage
 
@@ -173,7 +173,7 @@ Special care needs to be taken if the SDK-generated notifications should be show
 
 ## Sample application
 
-A minimal sample application is included in the `sample` directory of this repo. It implements the notification system described above and includes some optional optimalizations, such as the changing of scan frequency settings (in `SampleApplication`), a richer notification (in the `B4SNotificationReceiver`) and foreground notification popup support (in `LaunchActivity`). Note that it will not run correctly until the application ID has been replaced from `MY-APP-ID` to your unique ID as provided by Ezeeworld.
+A sample application is included in the `sample-eclipse` and `sample-gradle` directories of this repo. They show, as described above, how to set up the SDK and they include some optional optimalizations, such as enabling debuggin (in `SampleApplication`) and foreground notification popup support (in `LaunchActivity`). Note that it will not run correctly until the application ID has been replaced from `MY-APP-ID` to your unique ID as provided by Ezeeworld.
 
 ## Copyright
 
