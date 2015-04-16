@@ -25,7 +25,7 @@ The SDK depends on the Jackson, Linear Algebra for Java libraries and EventBus l
        compile 'org.codehaus.jackson:jackson-core-asl:1.9.13'
        compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
        compile 'org.la4j:la4j:0.4.9'
-       compile 'com.google.android.gms:play-services:6.1.+'
+       compile 'com.google.android.gms:play-services-location:6.5.87'
        compile fileTree(dir: 'libs', include: ['*.jar'])
    }
    ```
