@@ -22,6 +22,10 @@ public class SampleApp extends Application {
 		settings.setShouldEnforceBluetooth(true); // Turn on Bluetooth when required for background scanning (true by default)
 		settings.setShouldLogDebug(true);
 		settings.setShouldLogVerbose(true);
+		if (settings.getCustomerFirstName() == null) {
+			// Still need to set the customer details
+			settings.storeCustomerFields(this, "SampleApp", Api.B4SGENDER_UNDEFINED, "SampleApp", "Demo", "", "", "", "", "", "", 0, 0);
+		}
 
 		// Start the monitoring service, if needed
 		MonitoringManager.ensureMonitoringService(this);
