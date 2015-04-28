@@ -133,6 +133,27 @@ The SDK depends on the Jackson, Linear Algebra for Java libraries and EventBus l
 
    Logging is turned off by default; use the `B4SSettings` object returned on initialization to enable debugging (using `setShouldLogDebug` and `setShouldLogVerbose`) as well as to change various other settings.
    
+### Customer data
+
+B4S can relate beacon interactions tot individual customers. Supplying the customer details is typically done on startup and/or after a user signed in to his/her account. In these cases you can update te SDK with this customer data (which is persisted; no need to call every time).
+
+   ```java
+		// Still need to set the customer details
+		settings.storeCustomerFields(this, 
+			"ClientReference#", 
+			Api.B4SGENDER_FEMALE, 
+			"LastName", 
+			"FirstName", 
+			"Email", 
+			"Phone", 
+			"Address", 
+			"City", 
+			"Country", 
+			"Zipcode", 
+			longtitude, 
+			latitude);
+   ```
+
 ### Deep links and custom broadcast intents
 
 By default the SDK will generate interaction notifications directly, such as web links. Deep links are send to the main activity of your application. The following Intent extras are available:
