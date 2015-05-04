@@ -5,6 +5,7 @@ import android.app.Application;
 import com.ezeeworld.b4s.android.sample.BuildConfig;
 import com.ezeeworld.b4s.android.sdk.B4SSettings;
 import com.ezeeworld.b4s.android.sdk.monitor.MonitoringManager;
+import com.ezeeworld.b4s.android.sdk.server.Api;
 
 /**
  * An example application for the B4S SDK that sets up some non-default settings and ensures the monitoring service is properly set up.
