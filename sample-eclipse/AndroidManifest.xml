@@ -2,13 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.ezeeworld.b4s.android.sample"
 	android:versionCode="4"
-	android:versionName="1.1.27" >
+	android:versionName="1.1.34" >
 
 	<uses-sdk
 		android:minSdkVersion="18"
 		android:targetSdkVersion="19" />
-
-	<permission android:name="com.ezeeworld.b4s.android.sdk.monitor.MONITOR_PERMISSION" />
 
 	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -38,8 +36,7 @@
 		<!-- Background monitoring for beacons -->
 		<service
 			android:name="com.ezeeworld.b4s.android.sdk.monitor.MonitoringManager"
-			android:exported="true"
-			android:permission="com.ezeeworld.b4s.android.sdk.monitor.MONITOR_PERMISSION">
+			android:exported="true">
 			<intent-filter>
 				<action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_ENSURE_SCANNING" />
 				<action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_QUERY_SCHEDULE" />
@@ -51,8 +48,7 @@
 			android:exported="false" />
 		<service
 			android:name="com.ezeeworld.b4s.android.sdk.monitor.InteractionService"
-			android:exported="true"
-			android:permission="com.ezeeworld.b4s.android.sdk.monitor.MONITOR_PERMISSION">
+			android:exported="true">
 			<intent-filter>
 				<action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_OBSERVATIONS" />
 			</intent-filter>

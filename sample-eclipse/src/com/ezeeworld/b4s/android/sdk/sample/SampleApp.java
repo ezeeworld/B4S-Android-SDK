@@ -2,6 +2,7 @@ package com.ezeeworld.b4s.android.sdk.sample;
 
 import com.ezeeworld.b4s.android.sdk.B4SSettings;
 import com.ezeeworld.b4s.android.sdk.monitor.MonitoringManager;
+import com.ezeeworld.b4s.android.sdk.server.Api;
 
 import android.app.Application;
 
