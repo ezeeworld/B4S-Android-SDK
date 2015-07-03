@@ -26,7 +26,7 @@ public class SampleApp extends Application {
 		settings.setShouldLogVerbose(true);
 		if (settings.getCustomerFirstName() == null) {
 			// Still need to set the customer details
-			settings.storeCustomerFields(this, "SampleApp", Api.B4SGENDER_UNDEFINED, "SampleApp", "Demo", "", "", "", "", "", "", 0, 0);
+			settings.storeCustomerFields(this, "SampleApp", "", Api.B4SGENDER_UNDEFINED, "SampleApp", "Demo", "", "", "", "", "", "", 0);
 		}
 
 		// Start the monitoring service, if needed
