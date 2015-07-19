@@ -134,25 +134,34 @@ The SDK depends on the Jackson, Linear Algebra for Java libraries and EventBus l
 
    Logging is turned off by default; use the `B4SSettings` object returned on initialization to enable debugging (using `setShouldLogDebug` and `setShouldLogVerbose`) as well as to change various other settings.
    
+### Application tagging
+
+You can tag your application with the B4S SDK. You can set two values : The first parameter is the event descriptor and the second the userData asociated to the event.
+
+   ```java
+		// Still need to set the customer details
+		B4S.event("Launch","No Data");
+   ```
+
 ### Customer data
 
 B4S can relate beacon interactions tot individual customers. Supplying the customer details is typically done on startup and/or after a user signed in to his/her account. In these cases you can update te SDK with this customer data (which is persisted; no need to call every time).
 
    ```java
-		// Still need to set the customer details
-		settings.storeCustomerFields(this, 
-			"ClientReference#", 
-			Api.B4SGENDER_FEMALE, 
-			"LastName", 
-			"FirstName", 
-			"Email", 
-			"Phone", 
-			"Address", 
-			"City", 
-			"Country", 
-			"Zipcode", 
-			longtitude, 
-			latitude);
+      // Still need to set the customer details
+      settings.storeCustomerFields(this, 
+         "ClientReference#", 
+         Api.B4SGENDER_FEMALE, 
+         "LastName", 
+         "FirstName", 
+         "Email", 
+         "Phone", 
+         "Address", 
+         "City", 
+         "Country", 
+         "Zipcode", 
+         longtitude, 
+         latitude);
    ```
 
 ### Deep links and custom broadcast intents
@@ -195,7 +204,7 @@ Special care needs to be taken if the SDK-generated notifications should be show
 
 ## Sample application
 
-A sample application is included in the `sample-eclipse` and `sample-gradle` directories of this repo. They show, as described above, how to set up the SDK and they include some optional optimalizations, such as enabling debuggin (in `SampleApplication`) and foreground notification popup support (in `LaunchActivity`). Note that it will not run correctly until the application ID has been replaced from `MY-APP-ID` to your unique ID as provided by Ezeeworld.
+A sample application is included in the `sample-eclipse` and `sample-gradle` directories of this repo. They show, as described above, how to set up the SDK and they include some optional optimalizations, such as enabling debuggin (in `SampleApplication`) and foreground notification popup support (in `LaunchActivity`). Note that it will not run correctly until the application ID has been replaced from `MY-APP-ID` to your unique application ID. You can generate an application ID for each of your applications with 'B4S Manager' application.
 
 ## Copyright
 
