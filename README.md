@@ -139,8 +139,17 @@ The SDK depends on the Jackson, Linear Algebra for Java libraries and EventBus l
 You can tag your application with the B4S SDK. You can set two values : The first parameter is the event descriptor and the second the userData asociated to the event.
 
    ```java
-		// Still need to set the customer details
 		B4S.event("Launch","No Data");
+   ```
+
+You can even set your own data dictionnary
+
+   ```java
+      Hashtable tags = new Hashtable();
+      tags.put("Key1","String1");
+      tags.put("Key2","String2");
+      tags.put("Key3",4);
+      B4STag.event("Test", tags);
    ```
 
 ### Customer data
