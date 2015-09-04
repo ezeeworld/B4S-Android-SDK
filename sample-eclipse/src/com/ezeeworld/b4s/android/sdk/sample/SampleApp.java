@@ -16,10 +16,9 @@ public class SampleApp extends Application {
 		super.onCreate();
 
 		// Initialize the B4S SDK with our app-specific registration ID
-		B4SSettings.init(this, "MY-APP-ID", "1");
+		B4SSettings settings = B4SSettings.init(this, "MY-APP-ID", "1");
 
 		// Adjust the settings to our needs
-		B4SSettings settings = B4SSettings.from(getApplicationContext());
 		settings.setShouldEnforceBluetooth(true); // Turn on Bluetooth when required for background scanning (true by default)
 		settings.setShouldLogDebug(true);
 		settings.setShouldLogVerbose(true);

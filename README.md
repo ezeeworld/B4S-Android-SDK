@@ -134,25 +134,43 @@ The SDK depends on the Jackson, Linear Algebra for Java libraries and EventBus l
 
    Logging is turned off by default; use the `B4SSettings` object returned on initialization to enable debugging (using `setShouldLogDebug` and `setShouldLogVerbose`) as well as to change various other settings.
    
+### Application tagging
+
+You can tag your application with the B4S SDK. You can set two values : The first parameter is the event descriptor and the second the userData asociated to the event.
+
+   ```java
+		B4S.event("Launch","No Data");
+   ```
+
+You can even set your own data dictionnary
+
+   ```java
+      Hashtable tags = new Hashtable();
+      tags.put("Key1","String1");
+      tags.put("Key2","String2");
+      tags.put("Key3",4);
+      B4STag.event("Test", tags);
+   ```
+
 ### Customer data
 
 B4S can relate beacon interactions tot individual customers. Supplying the customer details is typically done on startup and/or after a user signed in to his/her account. In these cases you can update te SDK with this customer data (which is persisted; no need to call every time).
 
    ```java
-		// Still need to set the customer details
-		settings.storeCustomerFields(this, 
-			"ClientReference#", 
-			Api.B4SGENDER_FEMALE, 
-			"LastName", 
-			"FirstName", 
-			"Email", 
-			"Phone", 
-			"Address", 
-			"City", 
-			"Country", 
-			"Zipcode", 
-			longtitude, 
-			latitude);
+      // Still need to set the customer details
+      settings.storeCustomerFields(this, 
+         "ClientReference#", 
+         Api.B4SGENDER_FEMALE, 
+         "LastName", 
+         "FirstName", 
+         "Email", 
+         "Phone", 
+         "Address", 
+         "City", 
+         "Country", 
+         "Zipcode", 
+         longtitude, 
+         latitude);
    ```
 
 ### Deep links and custom broadcast intents
@@ -171,31 +189,11 @@ By default the SDK will generate interaction notifications directly, such as web
 - `MonitoringManager.INTENT_BEACONID` - (IBeaconID) Beacon identification, including technical name (B4S:XXXX:XXXX), UDID, major and minor
 - `MonitoringManager.INTENT_DISTANCE` - (double) Distance estimate in meters
 
-For custom behaviour, in case none of the normal notification types are used, the SDK sends intent broadcasts to your application when a beacon is matched, such that your application can itself perform an appropriate action like generate the proper notification for the user or start an activity directly.
-
-As specified above, in the `AndroidManifest.xml` we define a `B4SNotificationReceiver` which parses the interaction matches. It should filter on the `com.ezeeworld.b4s.android.sdk.monitor.B4S_NOTIFICATION` action and extend from `BroadcastReceiver` directly such that in the `onReceive` method the broadcasted messages are received as `Intent`s. The same extras are bundled as with normal deep linking.
-
-For example, to simply show a user notification every time a message is broadcasted, implement in your `onReceive`:
-
-```java
-	NotificationManager notifications = (NotificationManager) context
-			.getSystemService(Context.NOTIFICATION_SERVICE);
-	int id = intent.getIntExtra(MonitoringManager.INTENT_SHOW, -1);
-	String title = intent.getStringExtra(MonitoringManager.INTENT_TITLE);
-	String message = intent.getStringExtra(MonitoringManager.INTENT_MESSAGE);
-	notifications.notify(id, new Notification.Builder(context)
-			.setSmallIcon(R.drawable.ic_notification)
-			.setContentTitle(title)
-			.setContentText(message)
-			.setAutoCancel(true)
-			.build());
-```
-
 Special care needs to be taken if the SDK-generated notifications should be shown as pop-up when using the application in the foreground, rather than as Android notification. To implement this behaviour, every `Activity` in which notification popups are allowed should extend from the `B4SNotificationActivity` base class. Alternatively, if your activity already extends another class, you may instantiate a `B4SNotificationPopup` instance in the `onCreate` method and call through its `onResume` and `onPause` methods appropriatedly.
 
 ## Sample application
 
-A sample application is included in the `sample-eclipse` and `sample-gradle` directories of this repo. They show, as described above, how to set up the SDK and they include some optional optimalizations, such as enabling debuggin (in `SampleApplication`) and foreground notification popup support (in `LaunchActivity`). Note that it will not run correctly until the application ID has been replaced from `MY-APP-ID` to your unique ID as provided by Ezeeworld.
+A sample application is included in the `sample-eclipse` and `sample-gradle` directories of this repo. They show, as described above, how to set up the SDK and they include some optional optimalizations, such as enabling debuggin (in `SampleApplication`) and foreground notification popup support (in `LaunchActivity`). Note that it will not run correctly until the application ID has been replaced from `MY-APP-ID` to your unique application ID. You can generate an application ID for each of your applications with 'B4S Manager' application.
 
 ## Copyright
 
