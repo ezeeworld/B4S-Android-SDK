@@ -19,12 +19,13 @@ The SDK depends on the Jackson and EventBus libraries, which are all Apache Lice
 
    ```gradle
    dependencies {
-       compile 'de.greenrobot:eventbus:2.2.1'
-       compile 'org.codehaus.jackson:jackson-core-asl:1.9.13'
-       compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
-       compile 'org.la4j:la4j:0.4.9'
-       compile 'com.google.android.gms:play-services-location:6.5.87'
-       compile fileTree(dir: 'libs', include: ['*.jar'])
+      compile 'de.greenrobot:eventbus:2.3.0'
+      compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
+      compile 'com.squareup.retrofit:converter-jackson:2.0.0-beta1'
+      compile 'com.google.android.gms:play-services-location:8.1.0'
+      compile 'com.google.android.gms:play-services-ads:8.1.0'
+      compile "com.google.android.gms:play-services-gcm:8.1.0"
+      compile fileTree(dir: 'libs', include: ['*.jar'])
    }
    ```
 
@@ -46,7 +47,7 @@ The SDK depends on the Jackson and EventBus libraries, which are all Apache Lice
       <uses-permission android:name="android.permission.INTERNET" />
       <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
       <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
       <uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
    ```
 
@@ -57,52 +58,79 @@ The SDK depends on the Jackson and EventBus libraries, which are all Apache Lice
               android:value="@integer/google_play_services_version" />
    ```
 
-4. Add the B4S services to the `<application>` element to allow background scanning for beacons.
+4. Add the B4S services to the `<application>` element to allow background scanning for and interacting with beacons.
 
    ```xml
-         <service
-            android:name="com.ezeeworld.b4s.android.sdk.monitor.MonitoringManager"
-            android:exported="true">
-            <intent-filter>
-               <action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_ENSURE_SCANNING" />
-               <action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_QUERY_SCHEDULE" />
-               <action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_SCHEDULE_RESULT" />
-            </intent-filter>
-         </service>
-         <service
-            android:name="com.ezeeworld.b4s.android.sdk.monitor.ScanService"
-            android:exported="false" />
-         <service
-            android:name="com.ezeeworld.b4s.android.sdk.monitor.InteractionService"
-            android:exported="true">
-            <intent-filter>
-               <action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_OBSERVATIONS" />
-            </intent-filter>
-         </service>
+      <!-- Background monitoring for beacons -->
+      <service
+         android:name="com.ezeeworld.b4s.android.sdk.monitor.MonitoringManager"
+         android:exported="true"
+         tools:ignore="ExportedService">
+         <intent-filter>
+            <action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_ENSURE_SCANNING" />
+            <action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_QUERY_SCHEDULE" />
+            <action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_SCHEDULE_RESULT" />
+         </intent-filter>
+      </service>
+      <service
+         android:name="com.ezeeworld.b4s.android.sdk.monitor.ScanService"
+         android:exported="false" />
+      <service
+         android:name="com.ezeeworld.b4s.android.sdk.monitor.InteractionService"
+         android:exported="true"
+         tools:ignore="ExportedService">
+         <intent-filter>
+            <action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_OBSERVATIONS" />
+         </intent-filter>
+      </service>
+      <service
+         android:name="com.ezeeworld.b4s.android.sdk.notifications.NotificationService"
+         android:exported="false" />
+
+      <activity
+         android:name="com.ezeeworld.b4s.android.sdk.monitor.WebViewInteractionActivity"
+         android:configChanges="orientation|keyboardHidden"
+         android:exported="true"
+         android:noHistory="true" />
+
+      <receiver android:name="com.ezeeworld.b4s.android.sdk.monitor.SystemEventReceiver">
+         <intent-filter>
+            <action android:name="android.intent.action.ACTION_USER_PRESENT" />
+            <action android:name="android.intent.action.BOOT_COMPLETED" />
+         </intent-filter>
+      </receiver>
    ```
-   
-   Note that the `MonitoringManager` and `InteractionService` are exported services (and since B4S SDK version 1.1.23 do not require a custom permission).
-5. It is recommended to add the B4S `SystemEventReceiver` to ensure the background scanning is started when the device is rebooted.
+5. If you use the push messaging feature of the B4S SDK, also add the push services.
 
    ```xml
-         <receiver android:name="com.ezeeworld.b4s.android.sdk.monitor.SystemEventReceiver" >
-            <intent-filter>
-               <action android:name="android.intent.action.ACTION_USER_PRESENT" />
-               <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-         </receiver>
+      <!-- Push messaging -->
+      <receiver
+         android:name="com.google.android.gms.gcm.GcmReceiver"
+         android:exported="true"
+         android:permission="com.google.android.c2dm.permission.SEND">
+         <intent-filter>
+            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            <category android:name="com.ezeeworld.b4s.android.sdk.gcm" />
+         </intent-filter>
+      </receiver>
+
+      <service
+         android:name="com.ezeeworld.b4s.android.sdk.push.GcmListenerService"
+         android:exported="false">
+         <intent-filter>
+            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+         </intent-filter>
+      </service>
+      <service
+         android:name="com.ezeeworld.b4s.android.sdk.push.InstanceIDListenerService"
+         android:exported="false">
+         <intent-filter>
+            <action android:name="com.google.android.gms.iid.InstanceID" />
+         </intent-filter>
+      </service>
    ```
 
-6. If you use the layer-style notifications for interactions where a web view is opened as in-app activity, also add the web view SDK activity to your manifest.
-
-   ```xml
-         <activity
-            android:name="com.ezeeworld.b4s.android.sdk.monitor.WebViewInteractionActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:noHistory="true" />
-   ```
-
-7. The B4S SDK required initialization of the library with the unique application ID (provided by Ezeeworld). It is suggested to do so in the application object. Make sure the application object refers to the `Application` object first.
+6. The B4S SDK required initialization of the library with the unique application ID (provided by Ezeeworld). It is suggested to do so in the application object. Make sure the application object refers to the `Application` object first, for example:
 
    ```xml
       <application
@@ -150,7 +178,7 @@ B4S can relate beacon interactions to individual customers. Supplying the custom
 
    ```java
    // Still need to set the customer details
-   settings.storeCustomerFields(this, 
+   settings.storeCustomerFields(
       "ClientReference#", 
       "UserID", 
       InteractionsApi.B4SGENDER_FEMALE, 
