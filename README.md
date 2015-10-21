@@ -41,14 +41,14 @@ The SDK depends on the Jackson and EventBus libraries, which are all Apache Lice
 2. Add the required permissions for access to internet, Bluetooth LE, location and the boot receiver:
 
    ```xml
-      <uses-permission android:name="android.permission.BLUETOOTH" />
-      <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-      <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-      <uses-permission android:name="android.permission.INTERNET" />
-      <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-      <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-      <uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
+   <uses-permission android:name="android.permission.BLUETOOTH" />
+   <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+   <uses-permission android:name="android.permission.INTERNET" />
+   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+   <uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
    ```
 
 3. For location updates, the Google Play Services requires some meta data in the `<application>` tag.
@@ -100,7 +100,15 @@ The SDK depends on the Jackson and EventBus libraries, which are all Apache Lice
          </intent-filter>
       </receiver>
    ```
-5. If you use the push messaging feature of the B4S SDK, also add the push services.
+5. If you use the push messaging feature of the B4S SDK, also add the push services. Outside of the `<application>` you need additional permissions:
+
+   ```xml
+   <uses-permission android:name="android.permission.WAKE_LOCK" />
+   <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+   <permission android:name="com.ezeeworld.b4s.android.sdk.gcm.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+   ```
+
+   and in the `<application>` tag the push services registration:
 
    ```xml
       <!-- Push messaging -->
@@ -148,6 +156,8 @@ The SDK depends on the Jackson and EventBus libraries, which are all Apache Lice
 
    Logging is turned off by default; use the `B4SSettings` object returned on initialization to enable debugging (using `setShouldLogDebug` and `setShouldLogVerbose`) as well as to change various other settings.
    
+7. To allow the SDK to show notifications as pop-up over the application when in the foreground, every `Activity` of your application needs a tie-in to the B4S SDK. Specifically, every `Activity` needs to either extends from `B4SNotificationActivity` or manually call through an instance of `B4SNotificationPopup`. In the latter case, ensure that you call through the `onPause` and `onResume` methods of the `B4SNotificationPopup` isntance.
+
 ### Application tagging
 
 You can tag your application with the B4S SDK. You can set two values: The first parameter is the event descriptor and the second the user data asociated to the event.
@@ -208,8 +218,6 @@ By default the SDK will generate interaction notifications directly, such as web
 - `MonitoringManager.INTENT_BEACONNAME` - (String) Name of the matched beacon as configured in the SDK
 - `MonitoringManager.INTENT_BEACONID` - (IBeaconID) Beacon identification, including technical name (B4S:XXXX:XXXX), UDID, major and minor
 - `MonitoringManager.INTENT_DISTANCE` - (double) Distance estimate in meters
-
-Special care needs to be taken if the SDK-generated notifications should be shown as pop-up when using the application in the foreground, rather than as Android notification. To implement this behaviour, **every** `Activity` in which notification popups are allowed should extend from the `B4SNotificationActivity` base class. Alternatively, if your activity already extends another class, you may instantiate a `B4SNotificationPopup` instance in the `onCreate` method and call through its `onResume` and `onPause` methods appropriatedly.
 
 ## Sample application
 
