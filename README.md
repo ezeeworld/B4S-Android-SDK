@@ -156,8 +156,6 @@ The SDK depends on the Jackson and EventBus libraries, which are all Apache Lice
 
    Logging is turned off by default; use the `B4SSettings` object returned on initialization to enable debugging (using `setShouldLogDebug` and `setShouldLogVerbose`) as well as to change various other settings.
    
-7. To allow the SDK to show notifications as pop-up over the application when in the foreground, every `Activity` of your application needs a tie-in to the B4S SDK. Specifically, every `Activity` needs to either extends from `B4SNotificationActivity` or manually call through an instance of `B4SNotificationPopup`. In the latter case, ensure that you call through the `onPause` and `onResume` methods of the `B4SNotificationPopup` isntance.
-
 ### Application tagging
 
 You can tag your application with the B4S SDK. You can set two values: The first parameter is the event descriptor and the second the user data asociated to the event.
@@ -218,6 +216,18 @@ By default the SDK will generate interaction notifications directly, such as web
 - `MonitoringManager.INTENT_BEACONNAME` - (String) Name of the matched beacon as configured in the SDK
 - `MonitoringManager.INTENT_BEACONID` - (IBeaconID) Beacon identification, including technical name (B4S:XXXX:XXXX), UDID, major and minor
 - `MonitoringManager.INTENT_DISTANCE` - (double) Distance estimate in meters
+
+### Alert for requirements
+
+If so desired, the SDK can generate alerts when the requirements for beacon scanning are not met. These include prompts to install the Play Services (with link to the Play Store), enable Bluetooth (with button to enable directly) and enable Location Services. Each of these show the platform default popup message. The frequency can be controlled in three ways based on the number of application launches: the number of launches skip before prompting, the interval between alerts and the maximum alerts to show. For example:
+
+```java
+   B4SAlertBehaviours.get().warnForBluetooth(true, 1, 2, 0); // Skip first time, then every other app launch
+   B4SAlertBehaviours.get().warnForGeolocation(true, 0, 1, 2); // Max 2 times
+   B4SAlertBehaviours.get().warnForPlayServices(true, 0, 0, 0); // One time only warning
+```
+
+It is recommended to call these from the `Application`'s 'onCreate` method, but always after the SDK initialisation.
 
 ## Android 6
 
