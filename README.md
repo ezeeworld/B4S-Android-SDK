@@ -70,6 +70,8 @@ The SDK depends on the Jackson and EventBus libraries, which are all Apache Lice
             <action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_ENSURE_SCANNING" />
             <action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_QUERY_SCHEDULE" />
             <action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_SCHEDULE_RESULT" />
+            <action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_QUERY_VERSION" />
+            <action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_REPORT_VERSION" />
          </intent-filter>
       </service>
       <service
@@ -176,7 +178,7 @@ You can even set your own data dictionnary
 
 ### Push messaging
 
-To enable support for push messages via the Google Cloud Messaging and B4S servers, call set on the `B4SSettings` instance returned by `B4SSettings.init()` (or use `B4SSettings.getInstance()`). By supplying the GCM Sender ID this way, push messaging support will be enabled. While the token registration is fully managed, you need to call this every time (typically in your `Application` object, right after `init()`).
+To enable support for push messages via the Google Cloud Messaging and B4S servers, call set on the `B4SSettings` instance returned by `B4SSettings.init()` (or use `B4SSettings.get()`). By supplying the GCM Sender ID this way, push messaging support will be enabled. While the token registration is fully managed, you do need to call this every time (typically in your `Application` object, right after `init()`).
 
 You can retrieve the required Sender ID from the [Google Developer Console](https://console.developers.google.com/). You also need to note the Server API Key and (let us) register it in the B4S backoffice.
 
