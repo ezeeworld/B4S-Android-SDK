@@ -1,7 +1,7 @@
 BeaconForStore Android SDK
 ===============
 
-BeaconForStore public Android SDK, by Ezeeworld, see www.beacon4store.com
+BeaconForStore public Android SDK, by Ezeeworld, see http://www.beaconforstore.com/
 
 ## Integration and migration
 
