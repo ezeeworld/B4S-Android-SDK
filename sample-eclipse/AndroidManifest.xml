@@ -15,6 +15,9 @@
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+	<permission android:name="com.ezeeworld.b4s.android.sdk.gcm.permission.C2D_MESSAGE" android:protectionLevel="signature" />
 
 	<uses-feature
 		android:name="android.hardware.bluetooth_le"
@@ -69,6 +72,7 @@
 				<action android:name="android.intent.action.ACTION_USER_PRESENT" />
 				<action android:name="android.intent.action.BOOT_COMPLETED" />
 			</intent-filter>
+		</receiver>
 
 		<!-- Push messaging -->
 		<receiver
