@@ -23,7 +23,6 @@ public class SampleApp extends Application {
 		settings.setPushMessagingSenderId("MY-GOOGLE-SENDER-ID");
 
 		// Adjust the settings to our needs
-		settings.setShouldEnforceBluetooth(true); // Turn on Bluetooth when required for background scanning (true by default)
 		settings.setShouldLogDebug(true);
 		settings.setShouldLogVerbose(true);
 
