@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.ezeeworld.b4s.android.sdk.B4SAlertBehaviours;
 import com.ezeeworld.b4s.android.sdk.B4SSettings;
+import com.ezeeworld.b4s.android.sdk.BuildConfig;
 import com.ezeeworld.b4s.android.sdk.monitor.MonitoringManager;
 import com.ezeeworld.b4s.android.sdk.server.InteractionsApi;
 
@@ -23,8 +24,8 @@ public class SampleApp extends Application {
 		settings.setPushMessagingSenderId("MY-GOOGLE-SENDER-ID");
 
 		// Adjust the settings to our needs
-		settings.setShouldLogDebug(true);
-		settings.setShouldLogVerbose(true);
+		settings.setShouldLogScanning(BuildConfig.DEBUG);
+		settings.setShouldLogMatching(BuildConfig.DEBUG);
 
 		// Have the SDK manage warnings for Bluetooth, Play Services installation and Location Services
 		B4SAlertBehaviours.get().warnForBluetooth(true, 1, 2, 0); // Skip first time, then every other app launch

@@ -8,8 +8,8 @@ android {
         applicationId "com.ezeeworld.b4s.android.sample"
         minSdkVersion 18
         targetSdkVersion 23
-        versionCode 9
-        versionName "1.6.1"
+        versionCode 10
+        versionName "1.8.1"
     }
     buildTypes {
         release {
@@ -28,10 +28,10 @@ dependencies {
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
     compile 'com.squareup.retrofit:converter-jackson:2.0.0-beta2'
-    compile 'com.google.android.gms:play-services-location:8.3.0'
-    compile 'com.google.android.gms:play-services-ads:8.3.0'
-    compile 'com.google.android.gms:play-services-gcm:8.3.0'
+    compile 'com.google.android.gms:play-services-location:8.4.0'
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
+    compile 'com.google.android.gms:play-services-gcm:8.4.0'
     compile (name:'b4s-android-sdk', ext:'aar')
-    compile (name:'b4s-android-sdk-playservices830', ext:'aar')
+    compile (name:'b4s-android-sdk-playservices840', ext:'aar')
 
 }

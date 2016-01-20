@@ -23,8 +23,8 @@ public class SampleApp extends Application {
 		settings.setPushMessagingSenderId("MY-GOOGLE-SENDER-ID");
 
 		// Adjust the settings to our needs
-		settings.setShouldLogDebug(true);
-		settings.setShouldLogVerbose(true);
+		settings.setShouldLogScanning(true);
+		settings.setShouldLogMatching(true);
 
 		// Have the SDK manage warnings for Bluetooth, Play Services installation and Location Services
 		B4SAlertBehaviours.get().warnForBluetooth(true, 1, 2, 0); // Skip first time, then every other app launch
