@@ -6,10 +6,10 @@ android {
 
     defaultConfig {
         applicationId "com.ezeeworld.b4s.android.sample"
-        minSdkVersion 18
+        minSdkVersion 10
         targetSdkVersion 23
-        versionCode 10
-        versionName "1.8.1"
+        versionCode 12
+        versionName "1.8.2"
     }
     buildTypes {
         release {
@@ -25,9 +25,9 @@ android {
 }
 
 dependencies {
+    compile 'nl.qbusict:cupboard:2.1.4'
     compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
-    compile 'com.squareup.retrofit:converter-jackson:2.0.0-beta2'
+    compile 'com.squareup.retrofit2:converter-jackson:2.0.0-beta3'
     compile 'com.google.android.gms:play-services-location:8.4.0'
     compile 'com.google.android.gms:play-services-ads:8.4.0'
     compile 'com.google.android.gms:play-services-gcm:8.4.0'

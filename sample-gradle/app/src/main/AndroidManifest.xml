@@ -3,7 +3,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	package="com.ezeeworld.b4s.android.sample">
 
-	<uses-sdk />
+	<uses-sdk tools:overrideLibrary="com.ezeeworld.b4s.android.sdk, com.ezeeworld.b4s.android.sdk.playservices" />
 
 	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -31,75 +31,13 @@
 			</intent-filter>
 		</activity>
 
-		<!-- Background monitoring for beacons -->
-		<service
-			android:name="com.ezeeworld.b4s.android.sdk.monitor.MonitoringManager"
-			android:exported="true"
-			tools:ignore="ExportedService">
-			<intent-filter>
-				<action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_ENSURE_SCANNING" />
-				<action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_QUERY_SCHEDULE" />
-				<action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_SCHEDULE_RESULT" />
-			</intent-filter>
-		</service>
-		<service
-			android:name="com.ezeeworld.b4s.android.sdk.monitor.ScanService"
-			android:exported="false" />
-		<service
-			android:name="com.ezeeworld.b4s.android.sdk.monitor.InteractionService"
-			android:exported="true"
-			tools:ignore="ExportedService">
-			<intent-filter>
-				<action android:name="com.ezeeworld.b4s.android.sdk.monitor.B4S_OBSERVATIONS" />
-			</intent-filter>
-		</service>
-		<service
-			android:name="com.ezeeworld.b4s.android.sdk.notifications.NotificationService"
-			android:exported="false" />
-
-		<activity
-			android:name="com.ezeeworld.b4s.android.sdk.monitor.WebViewInteractionActivity"
-			android:configChanges="orientation|keyboardHidden"
-			android:exported="true"
-			android:noHistory="true" />
-
-		<receiver android:name="com.ezeeworld.b4s.android.sdk.monitor.SystemEventReceiver">
-			<intent-filter>
-				<action android:name="android.intent.action.ACTION_USER_PRESENT" />
-				<action android:name="android.intent.action.BOOT_COMPLETED" />
-			</intent-filter>
-		</receiver>
-
-		<!-- Push messaging -->
 		<receiver
-			android:name="com.google.android.gms.gcm.GcmReceiver"
-			android:exported="true"
-			android:permission="com.google.android.c2dm.permission.SEND">
+			android:name="com.ezeeworld.b4s.android.sdk.sample.DeepLinkReceiver"
+			tools:ignore="ExportedReceiver">
 			<intent-filter>
-				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
-				<category android:name="com.ezeeworld.b4s.android.sdk.gcm" />
+				<action android:name="com.ezeeworld.b4s.android.sdk.notifications.DEEP_LINK" />
 			</intent-filter>
 		</receiver>
-
-		<service
-			android:name="com.ezeeworld.b4s.android.sdk.push.GcmListenerService"
-			android:exported="false">
-			<intent-filter>
-				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
-			</intent-filter>
-		</service>
-		<service
-			android:name="com.ezeeworld.b4s.android.sdk.push.InstanceIDListenerService"
-			android:exported="false">
-			<intent-filter>
-				<action android:name="com.google.android.gms.iid.InstanceID" />
-			</intent-filter>
-		</service>
-
-		<!-- Google Play Location Services meta data -->
-		<meta-data
-			android:name="com.google.android.gms.version"
-			android:value="@integer/google_play_services_version" />
 	</application>
 
 </manifest>

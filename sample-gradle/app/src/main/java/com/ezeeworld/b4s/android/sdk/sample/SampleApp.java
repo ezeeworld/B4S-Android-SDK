@@ -6,6 +6,7 @@ import com.ezeeworld.b4s.android.sdk.B4SAlertBehaviours;
 import com.ezeeworld.b4s.android.sdk.B4SSettings;
 import com.ezeeworld.b4s.android.sdk.BuildConfig;
 import com.ezeeworld.b4s.android.sdk.monitor.MonitoringManager;
+import com.ezeeworld.b4s.android.sdk.notifications.NotificationService;
 import com.ezeeworld.b4s.android.sdk.server.InteractionsApi;
 
 /**
@@ -26,6 +27,9 @@ public class SampleApp extends Application {
 		// Adjust the settings to our needs
 		settings.setShouldLogScanning(BuildConfig.DEBUG);
 		settings.setShouldLogMatching(BuildConfig.DEBUG);
+
+		// Send deep links to our broadcast receiver (instead of the default launcher activity delivery)
+		NotificationService.registerDeepLinkStyle(NotificationService.DeepLinkStyle.BroadcastReceiver);
 
 		// Have the SDK manage warnings for Bluetooth, Play Services installation and Location Services
 		B4SAlertBehaviours.get().warnForBluetooth(true, 1, 2, 0); // Skip first time, then every other app launch
