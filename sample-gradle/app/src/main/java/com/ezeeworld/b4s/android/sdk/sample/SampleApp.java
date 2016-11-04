@@ -2,7 +2,6 @@ package com.ezeeworld.b4s.android.sdk.sample;
 
 import android.app.Application;
 
-import com.ezeeworld.b4s.android.sdk.B4SAlertBehaviours;
 import com.ezeeworld.b4s.android.sdk.B4SSettings;
 import com.ezeeworld.b4s.android.sdk.B4SUserProperty;
 import com.ezeeworld.b4s.android.sdk.BuildConfig;
@@ -21,21 +20,11 @@ public class SampleApp extends Application {
 		// Initialize the B4S SDK with our app-specific registration ID
 		B4SSettings settings = B4SSettings.init(this, "MY-APP-ID");
 
-		// Enable push messages
+		// Enable remote push notifications
 //		settings.setPushMessagingSenderId("MY-GOOGLE-SENDER-ID");
-
-		// Adjust the settings to our needs
-		settings.setShouldLogScanning(BuildConfig.DEBUG);
-		settings.setShouldLogMatching(BuildConfig.DEBUG);
 
 		// Send deep links to our broadcast receiver (instead of the default launcher activity delivery)
 		NotificationService.registerDeepLinkStyle(NotificationService.DeepLinkStyle.BroadcastReceiver);
-
-		// Have the SDK manage warnings for Bluetooth, Play Services installation and Location Services
-		B4SAlertBehaviours.get().warnForBluetooth(true, 1, 2, 0); // Skip first time, then every other app launch
-		B4SAlertBehaviours.get().warnForGeolocation(true, 0, 1, 2); // Max 2 times
-		B4SAlertBehaviours.get().warnForPlayServices(true, 0, 0, 0); // One time only warning
-
 
 		B4SUserProperty.get().store(B4SUserProperty.USER_FIRST_NAME, "Jean-Michel");
 		B4SUserProperty.get().store(B4SUserProperty.USER_LAST_NAME, "Bécatresse");

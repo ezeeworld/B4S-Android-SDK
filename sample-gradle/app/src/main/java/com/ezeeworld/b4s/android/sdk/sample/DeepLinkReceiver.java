@@ -8,8 +8,10 @@ public class DeepLinkReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // Required as no Activity context is available
-		context.startActivity(intent);
+		Intent start = new Intent(context, LaunchActivity.class);
+		start.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		start.putExtra("extraEventId", intent.getStringExtra("b4s_intent_session"));
+		context.startActivity(start);
 	}
 
 }
