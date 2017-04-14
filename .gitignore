@@ -1,0 +1,21 @@
+# System:
+.DS_Store
+*.swp
+Desktop.ini
+
+# Eclipse:
+.classpath
+.project
+
+# Android:
+bin
+gen
+.settings/
+
+# Android Studio/Gradle
+.gradle
+/local.properties
+.idea
+build/
+*.iml
+
