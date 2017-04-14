@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Include the SDK in your project - Neerby SDK Android</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Include the SDK in your project";
+    var mkdocs_page_input_path = "include_in_project.md";
+    var mkdocs_page_url = "/include_in_project/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Neerby SDK Android</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Include the SDK in your project</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#hardware-software-requirements">Hardware &amp; software requirements</a></li>
+    
+
+    <li class="toctree-l2"><a href="#installation">Installation</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#get-your-application-id">Get your application ID</a></li>
+        
+            <li><a class="toctree-l3" href="#manual-installation">Manual installation</a></li>
+        
+            <li><a class="toctree-l3" href="#installation-using-maven">Installation using Maven</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../using_the_sdk/">Using the SDK</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../migration_guide/">Migratin guide</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Neerby SDK Android</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Include the SDK in your project</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="hardware-software-requirements">Hardware &amp; software requirements</h1>
+<p>The Neerby SDK uses Bluetooth 4.0 BLE (Bluetooth Low Energy) and thus is only available on the devices running  <strong>Android 4.3</strong>, API level 18. </p>
+<p>As Android 4.3 introduced support for Bluetooth LE, API level 18 is the minimum API level requirement for the SDK to work with beacons. However, it is safe to include the library in an application that support older Android versions. Since SDK 1.8.3 the minimum target is API level 10. If you need an even lower SDK, you can simply have Gradle ignore the B4S minimum SDK level by adding to your <code>AndroidManifest.xml</code>:</p>
+<pre><code class="xml">  &lt;uses-sdk tools:overrideLibrary=&quot;com.ezeeworld.b4s.android.sdk, com.ezeeworld.b4s.android.sdk.playservices&quot; /&gt;
+</code></pre>
+
+<h1 id="installation">Installation</h1>
+<p>You must perform the following tasks to integrate the Neerby SDK with your application:</p>
+<ul>
+<li>Get your application ID</li>
+<li>Import required librairies manually or using <a href="https://maven.apache.org/">Maven</a></li>
+<li>Adapt your <code>.gradle</code> files</li>
+<li>Code-level integration</li>
+</ul>
+<h2 id="get-your-application-id">Get your application ID</h2>
+<p>In order to use the SDK you must know the application ID that is tied to your Neerby account. </p>
+<ul>
+<li>Go to <a href="https://manager.neer.by">Neerby Web Manager</a></li>
+<li>Log-in with your Neerby account</li>
+<li>Go to the "Applications" section</li>
+<li>Select your application ID</li>
+</ul>
+<h2 id="manual-installation">Manual installation</h2>
+<p>The SDK is distributed in .AAR format, which includes metadata such as definitions for its services. To add .AAR files to your application, first ensure that the build scripts can find them. In your root <code>build.gradle</code> file you should have a <code>repositories</code> element, to which the plain libraries directory should be added, typically called <code>libs</code>:</p>
+<pre><code class="groovy">allprojects {
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+}
+</code></pre>
+
+<p>See <a href="https://github.com/ezeeworld/B4S-Android-SDK/blob/master/sample-gradle/build.gradle">the <code>sample-gradle</code> root project's <code>build.gradle</code> file</a> for an example of this repository declaration.</p>
+<p>Next, add all the B4S dependencies and reference its .AAR files in the main application's <code>app/build.gradle</code> file:</p>
+<pre><code class="groovy">dependencies {
+    compile 'nl.qbusict:cupboard:2.1.4'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.squareup.retrofit2:converter-jackson:2.2.0'
+    compile 'com.google.android.gms:play-services-location:9.8.0'
+    compile 'com.google.android.gms:play-services-ads:9.8.0'
+    compile 'com.google.android.gms:play-services-gcm:9.8.0'
+    compile (name:'b4s-android-sdk', ext:'aar')
+    compile (name:'b4s-android-sdk-playservices9.80', ext:'aar')
+}
+</code></pre>
+
+<p><strong>Important</strong>: This example relies on the Play Services version 9.8.0, but the SDK is compatible with all versions of the Play Services. Simply refer to the desired <code>play-services-xxx</code> libraries as usual and select the corresponding <code>b4s-android-sdk-playservicesXXX.aar</code> file. For example, if the Play Services 6.5 (v22) should be used instead:</p>
+<pre><code class="groovy">    ...
+    compile 'com.google.android.gms:play-services-location:6.5.87'
+    compile 'com.google.android.gms:play-services-ads:6.5.87'
+    ...
+    compile (name:'b4s-android-sdk-playservices650', ext:'aar')
+</code></pre>
+
+<p>The Jackson libraries dependencies ships with duplicate license files, which can be ignore by adding to the <code>buildTypes</code> part of your Gradle file a <code>packagingOptions</code> element to include the license files:</p>
+<pre><code class="groovy">    buildTypes {
+        ...
+        packagingOptions {
+            exclude 'META-INF/ASL2.0'
+            exclude 'META-INF/LICENSE'
+            exclude 'META-INF/NOTICE'
+        }
+    }
+</code></pre>
+
+<p>See <a href="https://github.com/ezeeworld/B4S-Android-SDK/blob/master/sample-gradle/app/build.gradle">the <code>sample-gradle</code> app module's <code>app/build.gradle</code> file</a> for an example, including all the dependencies.</p>
+<p>Finally, copy the <code>b4s-android-sdk.aar</code> and the <code>b4s-android-sdk-playservicesXXX.aar</code> version of your choice from the <a href="https://github.com/ezeeworld/B4S-Android-SDK/tree/master/sdk/aar"><code>/sdk/aar</code> release directory</a> to your <code>app/libs</code> directory.</p>
+<h2 id="installation-using-maven">Installation using Maven</h2>
+<p>To simplify your integration you can use <a href="https://maven.apache.org/">Maven</a></p>
+<p>The SDK is distributed in .AAR format, which includes metadata such as definitions for its services. To add .AAR files to your application, first ensure that the build scripts can find them. In your root <code>build.gradle</code> file you should have a <code>repositories</code> element, to which our Maven repository should be added:the plain libraries directory should be added:</p>
+<pre><code class="groovy">allprojects {
+    repositories {
+        jcenter()
+        maven { url &quot;http://maven.ezeeworld.com:8081/artifactory/libs-release-local&quot; }
+    }
+}
+</code></pre>
+
+<p>Next, add all the B4S dependencies and reference its .AAR files in the main application's <code>app/build.gradle</code> file:</p>
+<pre><code class="groovy">dependencies {
+    compile 'nl.qbusict:cupboard:2.1.4'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.squareup.retrofit2:converter-jackson:2.2.0'
+    compile 'com.google.android.gms:play-services-location:9.8.0'
+    compile 'com.google.android.gms:play-services-ads:9.8.0'
+    compile 'com.google.android.gms:play-services-gcm:9.8.0'
+    compile 'by.neer.sdk:nby-playservices-support980:2.2.1@aar'
+    compile 'by.neer.sdk:nby-sdk:2.2.1@aar'
+}
+</code></pre>
+
+<p>The Jackson libraries dependencies ships with duplicate license files, which can be ignore by adding to the <code>buildTypes</code> part of your Gradle file a <code>packagingOptions</code> element to include the license files:</p>
+<pre><code class="groovy">    buildTypes {
+        ...
+        packagingOptions {
+            exclude 'META-INF/ASL2.0'
+            exclude 'META-INF/LICENSE'
+            exclude 'META-INF/NOTICE'
+        }
+    }
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../using_the_sdk/" class="btn btn-neutral float-right" title="Using the SDK">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../using_the_sdk/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+      <script src="../js/syntax_language_name.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Migratin guide - Neerby SDK Android</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Migratin guide";
+    var mkdocs_page_input_path = "migration_guide.md";
+    var mkdocs_page_url = "/migration_guide/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Neerby SDK Android</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../include_in_project/">Include the SDK in your project</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../using_the_sdk/">Using the SDK</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Migratin guide</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#migration-guide">Migration guide</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#upgrade-to-220">Upgrade to 2.2.0</a></li>
+        
+            <li><a class="toctree-l3" href="#upgrade-to-184">Upgrade to 1.8.4</a></li>
+        
+            <li><a class="toctree-l3" href="#upgrade-to-183">Upgrade to 1.8.3</a></li>
+        
+            <li><a class="toctree-l3" href="#upgrade-to-182">Upgrade to 1.8.2</a></li>
+        
+            <li><a class="toctree-l3" href="#upgrade-to-181">Upgrade to 1.8.1</a></li>
+        
+            <li><a class="toctree-l3" href="#upgrade-to-180">Upgrade to 1.8.0</a></li>
+        
+            <li><a class="toctree-l3" href="#upgrade-to-170">Upgrade to 1.7.0</a></li>
+        
+            <li><a class="toctree-l3" href="#upgrade-to-161">Upgrade to 1.6.1</a></li>
+        
+            <li><a class="toctree-l3" href="#upgrade-to-160">Upgrade to 1.6.0</a></li>
+        
+            <li><a class="toctree-l3" href="#upgrade-to-155">Upgrade to 1.5.5</a></li>
+        
+            <li><a class="toctree-l3" href="#upgrade-to-154">Upgrade to 1.5.4</a></li>
+        
+            <li><a class="toctree-l3" href="#upgrade-to-152">Upgrade to 1.5.2</a></li>
+        
+            <li><a class="toctree-l3" href="#upgrade-to-150">Upgrade to 1.5.0</a></li>
+        
+            <li><a class="toctree-l3" href="#upgrade-to-145">Upgrade to 1.4.5</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Neerby SDK Android</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Migratin guide</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="migration-guide">Migration guide</h1>
+<p>Please refer to each individual version step when migrating to a newer SDK. The SDK uses <a href="http://semver.org/">Semantic Versioning</a></p>
+<p>The <a href="./">Integration Guide</a> always describes the most up-to-date integration requirements.</p>
+<h2 id="upgrade-to-220">Upgrade to 2.2.0</h2>
+<p>The APP-ID should now be set in your application Manifest. The previous installation method is now deprecated. This process is detailed in the installation documentation.
+We are now using the version 2.2.0 of retrofit.</p>
+<h2 id="upgrade-to-184">Upgrade to 1.8.4</h2>
+<p>No changes required.</p>
+<h2 id="upgrade-to-183">Upgrade to 1.8.3</h2>
+<p>No code changes required. The minimum SDK level is now set to 10, so applications targeting Android 2.3 can include the library without the need to an <code>overrideLibrary</code> attribute in their <code>&lt;uses-sdk /&gt;</code> manifest declaration.</p>
+<h2 id="upgrade-to-182">Upgrade to 1.8.2</h2>
+<p>No changes required.</p>
+<h2 id="upgrade-to-181">Upgrade to 1.8.1</h2>
+<p>The deep linking strategy can now optionally be changed. While the default delivery to the launcher Activity in a new task remains unchanged, three strategies are now available:</p>
+<ul>
+<li><code>LaunchActivityClearTask</code> - (Default) Deep links are delivered to your launch Activity, and always in a new task (with an Activity restart)</li>
+<li><code>LaunchActivityDirect</code> - Deep links are delivered to your launch Activity; if this is already running the Intent is delivered directly to your <code>onNewIntent</code> lifecycle method</li>
+<li><code>BroadcastReceiver</code> - Deep links are broadcasted with a <code>com.ezeeworld.b4s.android.sdk.notifications.DEEP_LINK</code> Intent action type</li>
+</ul>
+<p>Please refer to the [[deep linking section|Integration-guide#deep-linking]] in the main integration document for implementation details.</p>
+<h2 id="upgrade-to-180">Upgrade to 1.8.0</h2>
+<p>A Play Services support library was added in case you want to upgrade to the Play Services 8.4. Just use the <code>b4s-android-sdk-playservices840.aar</code>  file instead of the existing <code>playservicesXXX</code> variant.</p>
+<p>The Retrofit dependency was updated to incorporate stability changes and be compatible with apps that still use Retrofit 1.X. Make sure your dependency looks like:</p>
+<pre><code class="groovy">dependencies {
+    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
+    compile 'com.squareup.retrofit2:converter-jackson:2.0.0-beta3'
+    ...
+}
+</code></pre>
+
+<p>Local logging was changed from a level-based to a feature-based distinction. To enable logging, now use the <code>B4SSetting.setShouldLogScan(boolean)</code> and <code>B4SSetting.setShouldLogMatching(boolean)</code> methods instead of <code>setShouldLogDebug</code> and <code>setShouldLogVerbose</code>. Scanning-related logs are reported using the <code>B4SSCN</code> tag, which campaign matching logs are still using the <code>B4S</code> tag. For example, to get all logs, use <code>adb logcat -s B4SSCN:* B4S:*</code> or to only get info and higher priority logs about campaign matching you can use <code>adb logcat -s B4S:I</code>.</p>
+<h2 id="upgrade-to-170">Upgrade to 1.7.0</h2>
+<p>The dependencies were updated for stability and additional functionality. Note that there is now an additional <code>cupboard</code> dependency. For Eclipse builds, the required jar files can be found in the <code>/sample-eclipse/libs</code> folder. For Gradle builds, ensure you refer to the correct versions:</p>
+<pre><code class="groovy">dependencies {
+    compile 'nl.qbusict:cupboard:2.1.4'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
+    compile 'com.squareup.retrofit:converter-jackson:2.0.0-beta2'
+    ...
+}
+</code></pre>
+
+<h2 id="upgrade-to-161">Upgrade to 1.6.1</h2>
+<p>When using the .JAR release with manual declarations in your <code>AndroidManifest.xml</code>, ensure that the GCM <code>permission</code> and <code>uses-permission</code> include your unique package name (instead of the placeholder <code>&lt;YOUR-PACKAGE-NAME&gt;</code>):</p>
+<pre><code class="xml">   &lt;permission
+      android:name=&quot;&lt;YOUR-PACKAGE-NAME&gt;.permission.C2D_MESSAGE&quot;
+      android:protectionLevel=&quot;signature&quot; /&gt;
+   &lt;uses-permission android:name=&quot;&lt;YOUR-PACKAGE-NAME&gt;.permission.C2D_MESSAGE&quot; /&gt;
+</code></pre>
+
+<p>The .AAR version (with Gradle) automatically injects the proper application id in the permission name, starting with this release.</p>
+<h2 id="upgrade-to-160">Upgrade to 1.6.0</h2>
+<p>The SDK was split into a core part and a connection part specific to the Play Services library that the application wants to use. This allows, for example, to stay at Play Services 6.5 while still upgrading to the latest B4S version.</p>
+<p>Secondly, the SDK is now also released in .AAR format, next to the existing .JAR format. When Gradle is used as build system, it is strongly recommended to use the .AAR format as it no longer requires manually declaring B4S services in the Android Manifest.</p>
+<p>To upgrade start by removing the B4S services (and activities and broadcast receivers) from your <code>AndroidManifest.xml</code>. Next, remove the <code>b4s-android-sdk.jar</code> from your <code>/libs</code> folder and replace it with the <code>b4s-android-sdk.aar</code> and  <code>b4s-android-sdk-playservicesXXX.aar</code> .AAR files from the <a href="https://github.com/ezeeworld/B4S-Android-SDK/tree/master/sdk/aar"><code>/sdk/aar</code> release folder</a>. The version of the <code>-playservices</code> .JAR file should correspond to your Play Services version. For example, use <code>b4s-android-sdk-playservices830.jar</code> if you are at Play Services 8.3 (v28). Finally, in your root <code>/build.gradle</code> file, ensure that the libs directory is added to the <code>repositories</code> list. This part now looks something like:</p>
+<pre><code class="groovy">allprojects {
+    repositories {
+        jcenter()
+        flatDir{
+            dirs 'libs'
+        }
+    }
+}
+</code></pre>
+
+<p>Finally, in you applciations' <code>app/build.gradle</code> file, add the .AAR file dependencies, For example:</p>
+<pre><code class="groovy">    compile (name:'b4s-android-sdk', ext:'aar')
+    compile (name:'b4s-android-sdk-playservices830', ext:'aar')
+</code></pre>
+
+<p>See the <a href="https://github.com/ezeeworld/B4S-Android-SDK/tree/master/sample-gradle"><code>sample-gradle</code> sample project</a> for an up-to-date configuration which uses Play Services 8.3.</p>
+<h2 id="upgrade-to-155">Upgrade to 1.5.5</h2>
+<p>The Google Cloud Messaging (play-services-gcm) dependency is no longer a requirement if (and only if) push messaging is not used.</p>
+<h2 id="upgrade-to-154">Upgrade to 1.5.4</h2>
+<p>No changes required.</p>
+<h2 id="upgrade-to-152">Upgrade to 1.5.2</h2>
+<p>If multiple B4S apps are installed, the SDK will now automatically choose the most recent SDK version to scan for beacons. This requires additional intent filter definitions for the <code>MonitoringManager</code> service. Please ensure that it is defined as:</p>
+<pre><code class="xml">&lt;service
+android:name=&quot;com.ezeeworld.b4s.android.sdk.monitor.MonitoringManager&quot;
+android:exported=&quot;true&quot;
+tools:ignore=&quot;ExportedService&quot;&gt;
+    &lt;intent-filter&gt;
+        &lt;action android:name=&quot;com.ezeeworld.b4s.android.sdk.monitor.B4S_ENSURE_SCANNING&quot; /&gt;
+        &lt;action android:name=&quot;com.ezeeworld.b4s.android.sdk.monitor.B4S_QUERY_SCHEDULE&quot; /&gt;
+        &lt;action android:name=&quot;com.ezeeworld.b4s.android.sdk.monitor.B4S_SCHEDULE_RESULT&quot; /&gt;
+        &lt;action android:name=&quot;com.ezeeworld.b4s.android.sdk.monitor.B4S_QUERY_VERSION&quot; /&gt;
+        &lt;action android:name=&quot;com.ezeeworld.b4s.android.sdk.monitor.B4S_REPORT_VERSION&quot; /&gt;
+    &lt;/intent-filter&gt;
+&lt;/service&gt;
+</code></pre>
+
+<h2 id="upgrade-to-150">Upgrade to 1.5.0</h2>
+<p>The dependencies were updated for better compatibility with recent Play Services and stability. For Eclipse builds, the required jar files can be found in the /sdk/libs folder. For Gradle builds, ensure you refer to the correct versions:</p>
+<pre><code class="groovy">   dependencies {
+      compile 'de.greenrobot:eventbus:2.3.0'
+      compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
+      compile 'com.squareup.retrofit:converter-jackson:2.0.0-beta1'
+      compile 'com.google.android.gms:play-services-location:8.1.0'
+      compile 'com.google.android.gms:play-services-ads:8.1.0'
+      compile &quot;com.google.android.gms:play-services-gcm:8.1.0&quot;
+      compile fileTree(dir: 'libs', include: ['*.jar'])
+   }
+</code></pre>
+
+<p>It is no longer necessary (nor should you) to extend from the <code>B4SNotificationActivity</code> or manage a <code>B4SNotificationPopup</code> manually. Please remove manual references to these class from your code. Not that, as part of this change, you DO have to supply your <code>Application</code> object to the <code>B4SSettings.init(Application, String)</code> method.</p>
+<p>The deep linking intent extra field constants, such as <code>INTENT_TITLE</code> and <code>INTENT_ACTIONID</code>, were moved from the <code>MonitoringManager</code> to the <code>NotificationService</code> class.</p>
+<p>The scanning service was updated for greater speed and reliability, especially on devices with poor Bluetooth hardware. The demo mode (which was exclusively used for testing) is deprecated so the <code>B4SSettings.setDemoMode(boolean)</code> was removed.</p>
+<p>On Android 6.0 a new runtime permission system was introduced, and this is now natively supported. When the user has not (yet) given permissions for the <code>android.permission-group.LOCATION</code> group, the SDK will show a request pop-up. Note that no alerts (pop-ups) will be shown if location services or bluetooth are disabled, although this <a href="https://github.com/ezeeworld/B4S-Android-SDK/blob/master/README.md#alert-for-requirements">may now be configured</a>.</p>
+<p>The <code>B4SSettings.storeCustomerFields()</code> method was slightly changed, as it is no longer needed to supply a location while a <code>userId</code> parameter was added.</p>
+<h2 id="upgrade-to-145">Upgrade to 1.4.5</h2>
+<p><a href="https://github.com/ezeeworld/B4S-Android-SDK/blob/master/README.md#push-messaging">Push messaging support</a> was added, for which a new <code>B4SSettings.setPushMessagingSenderId(String)</code> method was introduced. As part of the feature, the notification generation was moved and a new service declaration is required:</p>
+<pre><code class="xml">      &lt;service
+         android:name=&quot;com.ezeeworld.b4s.android.sdk.notifications.NotificationService&quot;
+         android:exported=&quot;false&quot; /&gt;
+</code></pre>
+
+<p>For push messaging integration itself, please refer to the <a href="https://github.com/ezeeworld/B4S-Android-SDK/blob/master/README.md#configure-the-sdk">full integration document</a>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../using_the_sdk/" class="btn btn-neutral" title="Using the SDK"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../using_the_sdk/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+      <script src="../js/syntax_language_name.js"></script>
+
+</body>
+</html>
