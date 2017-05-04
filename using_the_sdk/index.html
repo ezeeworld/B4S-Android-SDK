@@ -90,12 +90,18 @@
         </ul>
     
 
+    <li class="toctree-l2"><a href="#using-a-transient-device-uuid">Using a transient device UUID</a></li>
+    
+
+    <li class="toctree-l2"><a href="#getting-the-users-worlplace-and-home-coordinates">Getting the user's worlplace and home coordinates</a></li>
+    
+
     </ul>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="../migration_guide/">Migratin guide</a>
+    <a class="" href="../migration_guide/">Migration guide</a>
 	    </li>
           
         </ul>
@@ -276,6 +282,27 @@ public String modifyNotificationMessage(Bundle extras) {
 <h2 id="android-6">Android 6</h2>
 <p>With Android 6.0 (API level 23) a new permission system was introduced by Google. On Android 6 devices, users can manually manage permissions on a per-application basis. If an app targets Android 6 (using targetSdkVersion 23 and compileSdkVersion 23), an app also needs to deal with runtime permissions. This means that permissions such as location access (which is now a so-called 'dangerous' permission) needs to be explicitly requested with a permission request pop-up. Until SDK version 1.4.2, the B4S SDK does not handle this automatically and therefor the integrator needs to <a href="https://developer.android.com/training/permissions/requesting.html">handle permission request dialogs manually</a>.</p>
 <p>From version 1.5.0 onwards this will be handled for you by the SDK. A request to access the user location will automatically be shown when access was not yet granted. It is important to note that this affects any application when running on an Android 6 device, even those that still target API level 22 or lower.</p>
+<h1 id="using-a-transient-device-uuid">Using a transient device UUID</h1>
+<p><strong>Warning</strong>: using this feature is <em>not</em> recommended</p>
+<p>Upon the app installation, an anymous and persistent device UUID is used if the app is un-installed then re-installed. To make this ID transient add a <code>by.neer.sdk.USE_TRANSIENT_DEVICEID</code> key to your AndroidManifest.xml, with the value <code>true</code> in the application block.</p>
+<pre><code class="xml">&lt;meta-data android:name=&quot;by.neer.sdk.USE_TRANSIENT_DEVICEID&quot; android:value=&quot;true&quot; /&gt;
+</code></pre>
+
+<h1 id="getting-the-users-worlplace-and-home-coordinates">Getting the user's worlplace and home coordinates</h1>
+<p>The SDK tries to determinate the user's home &amp; workplace coordinate. When accessing those, home and workplace coordinates should be null if the SDK still do not collect enough information to identify the customer home and workplace locations.</p>
+<pre><code class="java">
+Location home = B4SSettings.get().userHomeCoordinates();
+if (home != null)
+{
+    // Use the coordinates
+}
+Location work = B4SSettings.get().userWorkplaceCoordinates();
+if (work != null)
+{
+    // Use the coordinates
+}
+
+</code></pre>
               
             </div>
           </div>
@@ -283,7 +310,7 @@ public String modifyNotificationMessage(Bundle extras) {
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../migration_guide/" class="btn btn-neutral float-right" title="Migratin guide">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../migration_guide/" class="btn btn-neutral float-right" title="Migration guide">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../include_in_project/" class="btn btn-neutral" title="Include the SDK in your project"><span class="icon icon-circle-arrow-left"></span> Previous</a>
