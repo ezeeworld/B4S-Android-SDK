@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	package="com.ezeeworld.b4s.android.sample">
-
 	<uses-feature
 		android:name="android.hardware.bluetooth_le"
 		android:required="true" />
