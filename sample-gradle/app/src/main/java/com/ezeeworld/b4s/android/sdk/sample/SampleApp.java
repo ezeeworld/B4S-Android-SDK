@@ -30,6 +30,9 @@ public class SampleApp extends Application implements NotificationService.Notifi
 		// Enable remote push notifications
         // settings.setPushMessagingSenderId("MY-GOOGLE-SENDER-ID");
 
+        // Prevent the SDK to be fooled with fake locations sent by a simulator.
+        settings.setDiscardMockLocations(true);
+
 		// Send deep links to our broadcast receiver (instead of the default launcher activity delivery)
 		NotificationService.registerDeepLinkStyle(NotificationService.DeepLinkStyle.BroadcastReceiver);
 

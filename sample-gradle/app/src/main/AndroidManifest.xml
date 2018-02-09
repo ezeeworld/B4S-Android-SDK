@@ -21,6 +21,8 @@
 		</activity>
 
 		<meta-data android:name="by.neer.sdk.APP_ID" android:value="MY-APP-ID" />
+        <meta-data android:name="by.neer.sdk.AUTOSTART" android:value="true" />
+        <meta-data android:name="by.neer.sdk.DISABLE_AUTOMATIC_INIT" android:value="false" />
 
 		<receiver
 			android:name="com.ezeeworld.b4s.android.sdk.sample.DeepLinkReceiver"
