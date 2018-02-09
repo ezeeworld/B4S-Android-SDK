@@ -71,6 +71,8 @@
     
         <ul>
         
+            <li><a class="toctree-l3" href="#upgrade-to-235">Upgrade to 2.3.5</a></li>
+        
             <li><a class="toctree-l3" href="#upgrade-to-220">Upgrade to 2.2.0</a></li>
         
             <li><a class="toctree-l3" href="#upgrade-to-184">Upgrade to 1.8.4</a></li>
@@ -140,6 +142,9 @@
                 <h1 id="migration-guide">Migration guide</h1>
 <p>Please refer to each individual version step when migrating to a newer SDK. The SDK uses <a href="http://semver.org/">Semantic Versioning</a></p>
 <p>The <a href="./">Integration Guide</a> always describes the most up-to-date integration requirements.</p>
+<h2 id="upgrade-to-235">Upgrade to 2.3.5</h2>
+<p>Notification caping support.
+PlayServices versions prior to 10.2.6 are no more supported since remote push messages causes app crashes for apps build with targetSDK 26 on Android 8.x devices. </p>
 <h2 id="upgrade-to-220">Upgrade to 2.2.0</h2>
 <p>The APP-ID should now be set in your application Manifest. The previous installation method is now deprecated. This process is detailed in the installation documentation.
 We are now using the version 2.2.0 of retrofit.</p>

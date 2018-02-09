@@ -157,20 +157,20 @@
     compile 'nl.qbusict:cupboard:2.1.4'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.squareup.retrofit2:converter-jackson:2.2.0'
-    compile 'com.google.android.gms:play-services-location:9.8.0'
-    compile 'com.google.android.gms:play-services-ads:9.8.0'
-    compile 'com.google.android.gms:play-services-gcm:9.8.0'
+    compile 'com.google.android.gms:play-services-location:10.2.6'
+    compile 'com.google.android.gms:play-services-ads:10.2.6'
+    compile 'com.google.android.gms:play-services-gcm:10.2.6'
     compile (name:'b4s-android-sdk', ext:'aar')
-    compile (name:'b4s-android-sdk-playservices980', ext:'aar')
+    compile (name:'b4s-android-sdk-playservices1102', ext:'aar')
 }
 </code></pre>
 
-<p><strong>Important</strong>: This example relies on the Play Services version 9.8.0, but the SDK is compatible with all versions of the Play Services. Simply refer to the desired <code>play-services-xxx</code> libraries as usual and select the corresponding <code>b4s-android-sdk-playservicesXXX.aar</code> file. For example, if the Play Services 6.5 (v22) should be used instead:</p>
+<p><strong>Important</strong>: This example relies on the Play Services version 10.2.6, but the SDK is compatible with versions of the Play Services starting with 10.2.6. Previous PlayServices versions are no more supported since they may cause crashes on Android 8.x. Simply refer to the desired <code>play-services-xxx</code> libraries as usual and select the corresponding <code>b4s-android-sdk-playservicesXXX.aar</code> file. For example, if the Play Services 11.0 (v2) should be used instead:</p>
 <pre><code class="groovy">    ...
-    compile 'com.google.android.gms:play-services-location:6.5.87'
-    compile 'com.google.android.gms:play-services-ads:6.5.87'
+    compile 'com.google.android.gms:play-services-location:11.0.2'
+    compile 'com.google.android.gms:play-services-ads:11.0.2'
     ...
-    compile (name:'b4s-android-sdk-playservices650', ext:'aar')
+    compile (name:'b4s-android-sdk-playservices1102', ext:'aar')
 </code></pre>
 
 <p>The Jackson libraries dependencies ships with duplicate license files, which can be ignore by adding to the <code>buildTypes</code> part of your Gradle file a <code>packagingOptions</code> element to include the license files:</p>
@@ -202,11 +202,11 @@
     compile 'nl.qbusict:cupboard:2.1.4'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.squareup.retrofit2:converter-jackson:2.2.0'
-    compile 'com.google.android.gms:play-services-location:9.8.0'
-    compile 'com.google.android.gms:play-services-ads:9.8.0'
-    compile 'com.google.android.gms:play-services-gcm:9.8.0'
-    compile 'by.neer.sdk:nby-playservices-support980:2.2.1@aar'
-    compile 'by.neer.sdk:nby-sdk:2.2.1@aar'
+    compile 'com.google.android.gms:play-services-location:11.0.2'
+    compile 'com.google.android.gms:play-services-ads:11.0.2'
+    compile 'com.google.android.gms:play-services-gcm:11.0.2'
+    compile 'by.neer.sdk:nby-playservices-support1102:2.3.5@aar'
+    compile 'by.neer.sdk:nby-sdk:2.3.5@aar'
 }
 </code></pre>
 

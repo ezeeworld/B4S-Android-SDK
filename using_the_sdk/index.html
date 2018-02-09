@@ -153,13 +153,16 @@
    android:label=&quot;@string/app_name&quot; &gt;
    ...
    &lt;meta-data android:name=&quot;by.neer.sdk.APP_ID&quot; android:value=&quot;MY-APP-ID&quot; /&gt;
+   &lt;meta-data android:name=&quot;by.neer.sdk.AUTOSTART&quot; android:value=&quot;true&quot; /&gt;
+   &lt;meta-data android:name=&quot;by.neer.sdk.DISABLE_AUTOMATIC_INIT&quot; android:value=&quot;false&quot; /&gt;
    ...
 &lt;/application&gt;
 </code></pre>
 
 <p>And replace <code>MY-APP-ID</code> with your unique application ID.</p>
-<p><strong>Warning</strong>: if this key is present with a valid application identifier, the SDK will init automatically upon app launch. It will register the device with the Neer.by server (but won't search for beacons, or display notifications, or send geolocalized information to our server). If you want to fully control when the device will be registered to our back-end, add a <code>by.neer.sdk.DISABLE_AUTOMATIC_INIT</code> key to your Manifest, with a <code>true</code> value.</p>
+<p><strong>Warning</strong>: if these keys are present with a valid application identifier, the SDK will init automatically upon app launch. It will register the device with the Neer.by server (but won't search for beacons, or display notifications, or send geolocalized information to our server). If you want to fully control when the device will be registered to our back-end, set <code>by.neer.sdk.AUTOSTART</code> and <code>by.neer.sdk.DISABLE_AUTOMATIC_INIT</code> keys to your Manifest, with respectively <code>false</code> and <code>true</code> value.</p>
 <p><code>xml
+ &lt;meta-data android:name="by.neer.sdk.AUTOSTART" android:value="false" /&gt;
  &lt;meta-data android:name="by.neer.sdk.DISABLE_AUTOMATIC_INIT" android:value="true" /&gt;</code></p>
 <ul>
 <li>Import the SDK in your Application subclass:</li>
@@ -213,7 +216,7 @@ B4SSettings.get().setShouldVibrateOnNotification(true);
 <p><em>To use remote push notifications you must first follow the instructions of the "Base integration"</em></p>
 <p>To use remote push messaging with the Neerby SDK, ensure that the <code>play-services-gcm</code> library is properly specified in your <code>app/build.gradle</code> dependencies:</p>
 <pre><code class="groovy">{
-    compile 'com.google.android.gms:play-services-gcm:8.4.0'
+    compile 'com.google.android.gms:play-services-gcm:10.2.6'
 }
 </code></pre>
 
