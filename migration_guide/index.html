@@ -166,8 +166,8 @@ We are now using the version 2.2.0 of retrofit.</p>
 <p>A Play Services support library was added in case you want to upgrade to the Play Services 8.4. Just use the <code>b4s-android-sdk-playservices840.aar</code>  file instead of the existing <code>playservicesXXX</code> variant.</p>
 <p>The Retrofit dependency was updated to incorporate stability changes and be compatible with apps that still use Retrofit 1.X. Make sure your dependency looks like:</p>
 <pre><code class="groovy">dependencies {
-    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
-    compile 'com.squareup.retrofit2:converter-jackson:2.0.0-beta3'
+    implementation 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
+    implementation 'com.squareup.retrofit2:converter-jackson:2.0.0-beta3'
     ...
 }
 </code></pre>
@@ -176,10 +176,10 @@ We are now using the version 2.2.0 of retrofit.</p>
 <h2 id="upgrade-to-170">Upgrade to 1.7.0</h2>
 <p>The dependencies were updated for stability and additional functionality. Note that there is now an additional <code>cupboard</code> dependency. For Eclipse builds, the required jar files can be found in the <code>/sample-eclipse/libs</code> folder. For Gradle builds, ensure you refer to the correct versions:</p>
 <pre><code class="groovy">dependencies {
-    compile 'nl.qbusict:cupboard:2.1.4'
-    compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
-    compile 'com.squareup.retrofit:converter-jackson:2.0.0-beta2'
+    implementation 'nl.qbusict:cupboard:2.1.4'
+    implementation 'de.greenrobot:eventbus:2.4.0'
+    implementation 'com.squareup.retrofit:retrofit:2.0.0-beta2'
+    implementation 'com.squareup.retrofit:converter-jackson:2.0.0-beta2'
     ...
 }
 </code></pre>
@@ -207,7 +207,7 @@ We are now using the version 2.2.0 of retrofit.</p>
 }
 </code></pre>
 
-<p>Finally, in you applciations' <code>app/build.gradle</code> file, add the .AAR file dependencies, For example:</p>
+<p>Finally, in you applications' <code>app/build.gradle</code> file, add the .AAR file dependencies, For example:</p>
 <pre><code class="groovy">    compile (name:'b4s-android-sdk', ext:'aar')
     compile (name:'b4s-android-sdk-playservices830', ext:'aar')
 </code></pre>
@@ -236,13 +236,13 @@ tools:ignore=&quot;ExportedService&quot;&gt;
 <h2 id="upgrade-to-150">Upgrade to 1.5.0</h2>
 <p>The dependencies were updated for better compatibility with recent Play Services and stability. For Eclipse builds, the required jar files can be found in the /sdk/libs folder. For Gradle builds, ensure you refer to the correct versions:</p>
 <pre><code class="groovy">   dependencies {
-      compile 'de.greenrobot:eventbus:2.3.0'
-      compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
-      compile 'com.squareup.retrofit:converter-jackson:2.0.0-beta1'
-      compile 'com.google.android.gms:play-services-location:8.1.0'
-      compile 'com.google.android.gms:play-services-ads:8.1.0'
-      compile &quot;com.google.android.gms:play-services-gcm:8.1.0&quot;
-      compile fileTree(dir: 'libs', include: ['*.jar'])
+      implementation 'de.greenrobot:eventbus:2.3.0'
+      implementation 'com.squareup.retrofit:retrofit:2.0.0-beta1'
+      implementation 'com.squareup.retrofit:converter-jackson:2.0.0-beta1'
+      implementation 'com.google.android.gms:play-services-location:8.1.0'
+      implementation 'com.google.android.gms:play-services-ads:8.1.0'
+      implementation &quot;com.google.android.gms:play-services-gcm:8.1.0&quot;
+      implementation fileTree(dir: 'libs', include: ['*.jar'])
    }
 </code></pre>
 

@@ -168,14 +168,13 @@
 <li>Import the SDK in your Application subclass:</li>
 </ul>
 <pre><code class="java">import com.ezeeworld.b4s.android.sdk.B4SSettings;
-import com.ezeeworld.b4s.android.sdk.monitor.MonitoringManager;
 </code></pre>
 
 <ul>
 <li>Start the SDK in the <code>onCreate</code> method:</li>
 </ul>
 <pre><code class="java">B4SSettings settings = B4SSettings.init(this);
-MonitoringManager.ensureMonitoringService(this);
+settings.go();
 </code></pre>
 
 <h1 id="prevent-your-application-to-trigger-notifications-resulting-of-mock-locations">Prevent your application to trigger notifications resulting of mock locations</h1>
@@ -210,6 +209,9 @@ B4STag.event(&quot;Test&quot;, tags);
 B4SSettings.get().setCustomNotificationSmallIcon(R.drawable.ic_notifsmall);
 B4SSettings.get().setCustomNotificationLargeIcon(R.drawable.ic_notiflarge);
 B4SSettings.get().setShouldVibrateOnNotification(true);
+B4SSettings.get().setVibrationPattern(new long[]{100, 300, 100, 300});
+B4SSettings.get().setShouldRingOnNotification(true);
+B4SSettings.get().enableNotificationSound();
 </code></pre>
 
 <h1 id="push-notifications">Push notifications</h1>
