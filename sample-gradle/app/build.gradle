@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
         applicationId "com.ezeeworld.b4s.android.sample"
-        minSdkVersion 14
-        targetSdkVersion 26
+        minSdkVersion 19
+        targetSdkVersion 25
         versionCode 12
-        versionName "2.3.0"
+        versionName "2.3.2"
     }
     buildTypes {
         release {
@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         packagingOptions {
+            exclude 'META-INF/maven/com.squareup.okio/okio/pom.properties'
+            exclude 'META-INF/maven/com.squareup.okio/okio/pom.xml'
+            exclude 'META-INF/maven/com.squareup.okhttp3/okhttp/pom.properties'
+            exclude 'META-INF/maven/com.squareup.okhttp3/okhttp/pom.xml'
             exclude 'META-INF/ASL2.0'
             exclude 'META-INF/LICENSE'
             exclude 'META-INF/NOTICE'
@@ -25,13 +29,17 @@ android {
 }
 
 dependencies {
-    compile 'nl.qbusict:cupboard:2.1.4'
-    compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'com.squareup.retrofit2:converter-jackson:2.0.0'
-    compile 'com.google.android.gms:play-services-location:10.2.6'
-    compile 'com.google.android.gms:play-services-ads:10.2.6'
-    compile 'com.google.android.gms:play-services-gcm:10.2.6'
-    compile 'by.neer.sdk:nby-playservices-support1026:2.3.5@aar'
-    compile 'by.neer.sdk:nby-sdk:2.3.5@aar'
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:25.3.1'
+    implementation 'com.android.support:design:25.3.1'
+    implementation 'nl.qbusict:cupboard:2.1.4'
+    implementation 'de.greenrobot:eventbus:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-jackson:2.0.0'
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
+    implementation 'com.google.android.gms:play-services-ads:15.0.1'
+    implementation 'com.google.android.gms:play-services-gcm:15.0.1'
+    //compile 'by.neer.sdk:nby-playservices-support1501:2.3.9@aar'
+    //compile 'by.neer.sdk:nby-sdk:2.3.9@aar'
+    implementation(name: 'b4s-android-sdk', ext: 'aar')
+    implementation(name: 'b4s-android-sdk-playservices1501', ext: 'aar')
 }

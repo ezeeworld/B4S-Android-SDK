@@ -4,9 +4,9 @@ import android.app.Application;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.ezeeworld.b4s.android.sdk.AsyncExecutor;
 import com.ezeeworld.b4s.android.sdk.B4SSettings;
 import com.ezeeworld.b4s.android.sdk.B4SUserProperty;
-import com.ezeeworld.b4s.android.sdk.monitor.MonitoringManager;
 import com.ezeeworld.b4s.android.sdk.notifications.NotificationService;
 
 /**
@@ -24,26 +24,39 @@ public class SampleApp extends Application implements NotificationService.Notifi
 	public void onCreate() {
 		super.onCreate();
 
-		// Initialize the B4S SDK. The Neerby identifier APP-ID is set in the Manifest file
-		B4SSettings settings = B4SSettings.init(this);
+        AsyncExecutor.get().execute(new AsyncExecutor.RunnableEx() {
+            @Override
+            public void run() throws Exception {
+                try {
 
-		// Enable remote push notifications
-        // settings.setPushMessagingSenderId("MY-GOOGLE-SENDER-ID");
+                    // Initialize the B4S SDK. The Neerby identifier APP-ID is set in the Manifest file
+                    B4SSettings settings = B4SSettings.init(SampleApp.this);
 
-        // Prevent the SDK to be fooled with fake locations sent by a simulator.
-        settings.setDiscardMockLocations(true);
+                    // Enable remote push notifications
+                    // settings.setPushMessagingSenderId("MY-GOOGLE-SENDER-ID");
 
-		// Send deep links to our broadcast receiver (instead of the default launcher activity delivery)
-		NotificationService.registerDeepLinkStyle(NotificationService.DeepLinkStyle.BroadcastReceiver);
+                    // Prevent the SDK to be fooled with fake locations sent by a simulator.
+                    settings.setDiscardMockLocations(true);
 
-		B4SUserProperty.get().store(B4SUserProperty.USER_FIRST_NAME, "Jean-Michel");
-		B4SUserProperty.get().store(B4SUserProperty.USER_LAST_NAME, "Bécatresse");
-		B4SUserProperty.get().store(B4SUserProperty.USER_GENDER, B4SUserProperty.Gender.Male);
+                    settings.setShouldVibrateOnNotification(true);
+                    settings.setVibrationPattern(new long[]{100, 300, 100, 300});
+                    settings.setShouldRingOnNotification(true);
+                    settings.enableNotificationSound();
 
+                    // Send deep links to our broadcast receiver (instead of the default launcher activity delivery)
+                    NotificationService.registerDeepLinkStyle(NotificationService.DeepLinkStyle.BroadcastReceiver);
 
-		// Start the monitoring service, if needed
-		MonitoringManager.ensureMonitoringService(this);
+                    B4SUserProperty.get().store(B4SUserProperty.USER_FIRST_NAME, "Jean-Michel");
+                    B4SUserProperty.get().store(B4SUserProperty.USER_LAST_NAME, "Bécatresse");
+                    B4SUserProperty.get().store(B4SUserProperty.USER_GENDER, B4SUserProperty.Gender.Male);
 
+                    // Start SDK
+                    settings.go();
+                } catch (Exception e) {
+                    Log.e("ERROR", "onCreate: Failed to get package manager " + e.getLocalizedMessage() );
+                }
+            }
+        });
 	}
 
     /**
@@ -70,6 +83,10 @@ public class SampleApp extends Application implements NotificationService.Notifi
         Log.d(TAG," > "+extras.getString(NotificationService.INTENT_CAMPAIGNNAME));
         Log.d(TAG," > "+extras.getString(NotificationService.INTENT_INTERACTIONNAME));
 
+        /*
+          The sample code below show how to customize notifications behaviours just before
+          triggering them.
+        */
         /*if (extras.getString(NotificationService.INTENT_CAMPAIGNNAME).indexOf("APP") == 0) {
             B4SSettings.get().setShouldVibrateOnNotification(false);
             B4SSettings.get().setCustomNotificationSmallIcon(R.drawable.ic_notifsmall);

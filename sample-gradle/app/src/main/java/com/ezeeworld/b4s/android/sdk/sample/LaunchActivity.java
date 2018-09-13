@@ -31,8 +31,6 @@ public class LaunchActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        Log.d("B4S", "Main::OnResume");
-
         checkPermissions();
 
         if (B4SSettings.isInitialized()) {
@@ -55,21 +53,17 @@ public class LaunchActivity extends Activity {
     }
 
 	private boolean checkLocationPermission() {
-        Log.d("B4S", "Main::checkLocationPermission");
 
         int res = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
 
         if (res != PackageManager.PERMISSION_GRANTED) {
 
-            Log.d("B4S", "Main::checkLocationPermission step 1-1 res="+res);
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_LOCATION);
 
-            Log.d("B4S", "Main::checkLocationPermission step 1-2");
             return false;
         } else {
-            Log.d("B4S", "Main::checkLocationPermission step 2-1 res="+res);
             return true;
         }
     }
