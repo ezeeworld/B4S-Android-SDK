@@ -9,7 +9,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 12
-        versionName "2.3.2"
+        versionName "2.3.3"
     }
     buildTypes {
         release {
@@ -38,8 +38,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:15.0.1'
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
     implementation 'com.google.android.gms:play-services-gcm:15.0.1'
-    //compile 'by.neer.sdk:nby-playservices-support1501:2.3.9@aar'
-    //compile 'by.neer.sdk:nby-sdk:2.3.9@aar'
-    implementation(name: 'b4s-android-sdk', ext: 'aar')
-    implementation(name: 'b4s-android-sdk-playservices1501', ext: 'aar')
+    implementation 'by.neer.sdk:nby-playservices-support1501:2.3.11@aar'
+    implementation 'by.neer.sdk:nby-sdk:2.3.11@aar'
+    //implementation(name: 'b4s-android-sdk', ext: 'aar')
+    //implementation(name: 'b4s-android-sdk-playservices1501', ext: 'aar')
 }

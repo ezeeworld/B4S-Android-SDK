@@ -7,6 +7,7 @@ import android.util.Log;
 import com.ezeeworld.b4s.android.sdk.AsyncExecutor;
 import com.ezeeworld.b4s.android.sdk.B4SSettings;
 import com.ezeeworld.b4s.android.sdk.B4SUserProperty;
+import com.ezeeworld.b4s.android.sdk.monitor.LocationAwareThread;
 import com.ezeeworld.b4s.android.sdk.notifications.NotificationService;
 
 /**
@@ -19,6 +20,7 @@ import com.ezeeworld.b4s.android.sdk.notifications.NotificationService;
 public class SampleApp extends Application implements NotificationService.NotificationModifier {
 
 	private static final String TAG = "B4S";
+    public static LocationAwareThread lat = null;
 
 	@Override
 	public void onCreate() {
@@ -52,6 +54,11 @@ public class SampleApp extends Application implements NotificationService.Notifi
 
                     // Start SDK
                     settings.go();
+
+                    lat = LocationAwareThread.get();
+                    if (lat == null) {
+                        lat = new LocationAwareThread(getApplicationContext());
+                    }
                 } catch (Exception e) {
                     Log.e("ERROR", "onCreate: Failed to get package manager " + e.getLocalizedMessage() );
                 }
