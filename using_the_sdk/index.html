@@ -65,12 +65,6 @@
     <li class="toctree-l2"><a href="#base-integration">Base integration</a></li>
     
 
-    <li class="toctree-l2"><a href="#prevent-your-application-to-trigger-notifications-resulting-of-mock-locations">Prevent your application to trigger notifications resulting of mock locations</a></li>
-    
-
-    <li class="toctree-l2"><a href="#recording-user-data">Recording user data</a></li>
-    
-
     <li class="toctree-l2"><a href="#application-tagging">Application tagging</a></li>
     
 
@@ -84,6 +78,8 @@
             <li><a class="toctree-l3" href="#deep-linking">Deep linking</a></li>
         
             <li><a class="toctree-l3" href="#dynamic-notifications-customisation">Dynamic notifications customisation</a></li>
+        
+            <li><a class="toctree-l3" href="#notifications-customisation-using-placeholders">Notifications customisation using placeholders</a></li>
         
             <li><a class="toctree-l3" href="#android-6">Android 6</a></li>
         
@@ -177,14 +173,45 @@
 settings.go();
 </code></pre>
 
-<h1 id="prevent-your-application-to-trigger-notifications-resulting-of-mock-locations">Prevent your application to trigger notifications resulting of mock locations</h1>
-<p>On Android, some applications (like Lockito) can generate mock locations (typically for debuging purpose). By default, mock locations are authorised by the Neer.by SDK. You can disable them with the following code :</p>
-<pre><code class="java">B4SSettings.get().setDiscardMockLocations(true);
+<ul>
+<li>Finally startup the new geolocation tracking module :</li>
+</ul>
+<pre><code class="java">public static LocationAwareThread lat = null;
+
+lat = LocationAwareThread.get();
+if (lat == null) {
+    lat = new LocationAwareThread(getApplicationContext());
+}
 </code></pre>
 
-<h1 id="recording-user-data">Recording user data</h1>
-<p>Neerby can relate events to individual customers. Supplying the customer details is typically done on startup and/or after a user signed in to his/her account. In these cases you can update te SDK with this customer data (which is persisted; no need to call this every time). The key should use reverse-dns-like notation to be used as a domain. For instance, the user hometown should use a "user.hometown" key. A few keys are provided (Firstname, lastname, gender...)</p>
-<pre><code class="java">B4SUserProperty.get().store(B4SUserProperty.USER_FIRST_NAME, &quot;Jean-Michel&quot;);
+<p><strong>Warning</strong>: Geolocation is required by the SDK. So you have to request <code>android.Manifest.permission.ACCESS_FINE_LOCATION</code> permission before calling B4SSettings.get().go()</p>
+<ul>
+<li>Minimal SDK activation</li>
+</ul>
+<p>If you set the following SDK init permissions in your <code>AndroidManifest.xml</code> :</p>
+<pre><code class="xml"> &lt;meta-data android:name=&quot;by.neer.sdk.AUTOSTART&quot; android:value=&quot;false&quot; /&gt;
+ &lt;meta-data android:name=&quot;by.neer.sdk.DISABLE_AUTOMATIC_INIT&quot; android:value=&quot;false&quot; /&gt;
+ ````
+
+The SDK will be initiated with the `B4SSettings.get().go()` call. But the SDK will only register itself on the Neerby back-end and query it's configuration each time the application is started again. Beacons and virtual beacons detection is not active.
+
+From here, if you want to fully enable all the SDK features, you have to call `B4SSettings.get().setForcedSdkActivation()` before calling `B4SSettings.get().go()`. By doing so, the SDK `by.neer.sdk.AUTOSTART` permission will be overridden and the SDK will enable beacons and virtual beacons detection.
+
+
+# Prevent your application to trigger notifications resulting of mock locations
+
+On Android, some applications (like Lockito) can generate mock locations (typically for debuging purpose). By default, mock locations are authorised by the Neer.by SDK. You can disable them with the following code :
+
+```java
+B4SSettings.get().setDiscardMockLocations(true);
+```
+
+# Recording user data
+
+Neerby can relate events to individual customers. Supplying the customer details is typically done on startup and/or after a user signed in to his/her account. In these cases you can update te SDK with this customer data (which is persisted; no need to call this every time). The key should use reverse-dns-like notation to be used as a domain. For instance, the user hometown should use a &quot;user.hometown&quot; key. A few keys are provided (Firstname, lastname, gender...)
+
+````java
+B4SUserProperty.get().store(B4SUserProperty.USER_FIRST_NAME, &quot;Jean-Michel&quot;);
 B4SUserProperty.get().store(B4SUserProperty.USER_LAST_NAME, &quot;Bécatresse&quot;);
 B4SUserProperty.get().store(B4SUserProperty.USER_GENDER, B4SUserProperty.Gender.Male);
 B4SUserProperty.get().store(&quot;user.hometown&quot;, &quot;Tubbydome&quot;);
@@ -254,9 +281,10 @@ B4SSettings.get().enableNotificationSound();
 <p>Deep link <code>Intent</code>s contain a bundle of extras to respond appropriately:</p>
 <ul>
 <li><code>NotificationService.INTENT_SHOW</code> - (int) Hash code of the interaction that was matched</li>
-<li><code>NotificationService.INTENT_INTERACTION</code> - (String) Name interaction that was matched</li>
+<li><code>NotificationService.INTENT_INTERACTIONNAME</code> - (String) Name interaction that was matched</li>
+<li><code>NotificationService.INTENT_INTERACTION</code> - (String) Unique ID of the interaction that was matched</li>
+<li><code>NotificationService.INTENT_CAMPAIGN</code> - (String) Unique ID of the campaign the matched interaction belongs to</li>
 <li><code>NotificationService.INTENT_CAMPAIGNNAME</code> - (String) Name of the campaign the matched interaction belongs to</li>
-<li><code>NotificationService.INTENT_INTERACTIONNAME</code> - (String) Unique ID of the interaction that was matched</li>
 <li><code>NotificationService.INTENT_TITLE</code> - (String) Message title, defaults to interaction name if no custom title was supplied</li>
 <li><code>NotificationService.INTENT_MESSAGE</code> - (String) Message, in which customer name, beacon name, shop name, etc. were already substituted</li>
 <li><code>NotificationService.INTENT_SHOPNAME</code> - (String) Name of the interaction's shop</li>
@@ -269,6 +297,7 @@ B4SSettings.get().enableNotificationSound();
 <li><code>NotificationService.INTENT_DISTANCE</code> - (double) Distance estimate in meters</li>
 <li><code>NotificationService.INTENT_SHOPLATITUDE</code> - (double) Latitude of the shop associated to the notification</li>
 <li><code>NotificationService.INTENT_SHOPLONGITUDE</code> - (double) Longitude of the shop associated to the notification</li>
+<li><code>NotificationService.INTENT_TIMESTAMP</code> - (double) Timestamp (in seconds) of notification trigger time</li>
 </ul>
 <h2 id="dynamic-notifications-customisation">Dynamic notifications customisation</h2>
 <p>You have the possibility to let your code modify every notification before they are display to the use.</p>
@@ -293,6 +322,63 @@ public String modifyNotificationMessage(Bundle extras) {
 </code></pre>
 
 <p>The string returned by these methods will be respectively the modified title and message of the notification. You can even modify the notification properties of the notifications.</p>
+<h2 id="notifications-customisation-using-placeholders">Notifications customisation using placeholders</h2>
+<p>You can automatically customise some items displayed within notifications :
+ * Notification title
+ * Notification text
+ * URLs used for deeplink or rich pushes.</p>
+<p>This can be achieved by inserting predefined placeholders in the corresponding items. Theses placeholders are :</p>
+<ul>
+<li>
+<p><BEACON.NAME>
+   This placeholder will be replaced with the name of the beacon which triggered the notification.</p>
+</li>
+<li>
+<p><BEACON.CLIENTREF>
+   This placeholder will be replaced with the reference code you eventually assigned to the beacon which triggered the notification.</p>
+</li>
+<li>
+<p><SHOP.NAME>
+   This placeholder will be replaced with the name of the shop associated to the notification (shop the beacon belongs to or location name of the virtual beacon)</p>
+</li>
+<li>
+<p><SHOP.CLIENTREF>
+   This placeholder will be replaced with the reference code of the shop associated to the notification (shop the beacon belongs to or location name of the virtual beacon)</p>
+</li>
+<li>
+<p><SHOP.CITY>
+   This placeholder will be replaced with the city name of the shop associated to the notification (shop the beacon belongs to or location name of the virtual beacon)</p>
+</li>
+<li>
+<p><SHOP.ZIPCODE>
+   This placeholder will be replaced with the zip code of the shop associated to the notification (shop the beacon belongs to or location name of the virtual beacon)</p>
+</li>
+<li>
+<p><USER.NAME>
+   This placeholder will be replaced with the value of the USER_LAST_NAME UserProperty you should have previously set with the following code.</p>
+</li>
+</ul>
+<pre><code class="java">B4SUserProperty.get().store(B4SUserProperty.USER_LAST_NAME, &quot;Bécatresse&quot;);
+</code></pre>
+
+<ul>
+<li><USER.FIRSTNAME>
+   This placeholder will be replaced with the value of the USER_FIRST_NAME UserProperty you should have previously set with the following code.</li>
+</ul>
+<pre><code class="java">B4SUserProperty.get().store(B4SUserProperty.USER_FIRST_NAME, &quot;Jean-Michel&quot;);
+</code></pre>
+
+<ul>
+<li><USER.CLIENTREF>
+   This placeholder will be replaced with the value of the USER_CLIENT_REF UserProperty you should have previously set with the following code.</li>
+</ul>
+<pre><code class="java">B4SUserProperty.get().store(B4SUserProperty.USER_CLIENT_REF, &quot;EE123&quot;);
+</code></pre>
+
+<ul>
+<li><NOTIFICATION.TIMESTAMP>
+   This placeholder will be replaced with the timestamp (in seconds ) of the notification generation.</li>
+</ul>
 <h2 id="android-6">Android 6</h2>
 <p>With Android 6.0 (API level 23) a new permission system was introduced by Google. On Android 6 devices, users can manually manage permissions on a per-application basis. If an app targets Android 6 (using targetSdkVersion 23 and compileSdkVersion 23), an app also needs to deal with runtime permissions. This means that permissions such as location access (which is now a so-called 'dangerous' permission) needs to be explicitly requested with a permission request pop-up. Until SDK version 1.4.2, the B4S SDK does not handle this automatically and therefor the integrator needs to <a href="https://developer.android.com/training/permissions/requesting.html">handle permission request dialogs manually</a>.</p>
 <p>From version 1.5.0 onwards this will be handled for you by the SDK. A request to access the user location will automatically be shown when access was not yet granted. It is important to note that this affects any application when running on an Android 6 device, even those that still target API level 22 or lower.</p>
