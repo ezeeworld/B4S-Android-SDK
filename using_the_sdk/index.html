@@ -65,6 +65,12 @@
     <li class="toctree-l2"><a href="#base-integration">Base integration</a></li>
     
 
+    <li class="toctree-l2"><a href="#prevent-your-application-to-trigger-notifications-resulting-of-mock-locations">Prevent your application to trigger notifications resulting of mock locations</a></li>
+    
+
+    <li class="toctree-l2"><a href="#recording-user-data">Recording user data</a></li>
+    
+
     <li class="toctree-l2"><a href="#application-tagging">Application tagging</a></li>
     
 
@@ -186,32 +192,35 @@ if (lat == null) {
 
 <p><strong>Warning</strong>: Geolocation is required by the SDK. So you have to request <code>android.Manifest.permission.ACCESS_FINE_LOCATION</code> permission before calling B4SSettings.get().go()</p>
 <ul>
-<li>Minimal SDK activation</li>
+<li>On demand SDK activation</li>
 </ul>
-<p>If you set the following SDK init permissions in your <code>AndroidManifest.xml</code> :</p>
-<pre><code class="xml"> &lt;meta-data android:name=&quot;by.neer.sdk.AUTOSTART&quot; android:value=&quot;false&quot; /&gt;
- &lt;meta-data android:name=&quot;by.neer.sdk.DISABLE_AUTOMATIC_INIT&quot; android:value=&quot;false&quot; /&gt;
- ````
+<p>There is several way to condition SDK activation :</p>
+<p>1) Test location permission to prevent activation before permission are set.</p>
+<pre><code class="java">int res = PackageManager.PERMISSION_GRANTED;
+if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.M) {
+  res = getApplicationContext().checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION);
+}
+Log.d(&quot;B4S&quot;, &quot;HabitsApplication init res=&quot;+res);
+if (res == PackageManager.PERMISSION_GRANTED) {
+  // Init SDK here
+}
+</code></pre>
 
-The SDK will be initiated with the `B4SSettings.get().go()` call. But the SDK will only register itself on the Neerby back-end and query it's configuration each time the application is started again. Beacons and virtual beacons detection is not active.
+<p>2) Test SharedPreferences value to locally enable SDK :</p>
+<pre><code class="java">boolean activateSdk = sharedPreferences.getBoolean(SDK_ACTIVATION, true);
+if (activateSdk) {
+  // Init SDK here
+}
+</code></pre>
 
-From here, if you want to fully enable all the SDK features, you have to call `B4SSettings.get().setForcedSdkActivation()` before calling `B4SSettings.get().go()`. By doing so, the SDK `by.neer.sdk.AUTOSTART` permission will be overridden and the SDK will enable beacons and virtual beacons detection.
+<h1 id="prevent-your-application-to-trigger-notifications-resulting-of-mock-locations">Prevent your application to trigger notifications resulting of mock locations</h1>
+<p>On Android, some applications (like Lockito) can generate mock locations (typically for debuging purpose). By default, mock locations are authorised by the Neer.by SDK. You can disable them with the following code :</p>
+<pre><code class="java">B4SSettings.get().setDiscardMockLocations(true);
+</code></pre>
 
-
-# Prevent your application to trigger notifications resulting of mock locations
-
-On Android, some applications (like Lockito) can generate mock locations (typically for debuging purpose). By default, mock locations are authorised by the Neer.by SDK. You can disable them with the following code :
-
-```java
-B4SSettings.get().setDiscardMockLocations(true);
-```
-
-# Recording user data
-
-Neerby can relate events to individual customers. Supplying the customer details is typically done on startup and/or after a user signed in to his/her account. In these cases you can update te SDK with this customer data (which is persisted; no need to call this every time). The key should use reverse-dns-like notation to be used as a domain. For instance, the user hometown should use a &quot;user.hometown&quot; key. A few keys are provided (Firstname, lastname, gender...)
-
-````java
-B4SUserProperty.get().store(B4SUserProperty.USER_FIRST_NAME, &quot;Jean-Michel&quot;);
+<h1 id="recording-user-data">Recording user data</h1>
+<p>Neerby can relate events to individual customers. Supplying the customer details is typically done on startup and/or after a user signed in to his/her account. In these cases you can update te SDK with this customer data (which is persisted; no need to call this every time). The key should use reverse-dns-like notation to be used as a domain. For instance, the user hometown should use a "user.hometown" key. A few keys are provided (Firstname, lastname, gender...)</p>
+<pre><code class="java">B4SUserProperty.get().store(B4SUserProperty.USER_FIRST_NAME, &quot;Jean-Michel&quot;);
 B4SUserProperty.get().store(B4SUserProperty.USER_LAST_NAME, &quot;Bécatresse&quot;);
 B4SUserProperty.get().store(B4SUserProperty.USER_GENDER, B4SUserProperty.Gender.Male);
 B4SUserProperty.get().store(&quot;user.hometown&quot;, &quot;Tubbydome&quot;);
