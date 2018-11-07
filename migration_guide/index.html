@@ -71,6 +71,8 @@
     
         <ul>
         
+            <li><a class="toctree-l3" href="#upgrade-to-2315">Upgrade to 2.3.15</a></li>
+        
             <li><a class="toctree-l3" href="#upgrade-to-2312">Upgrade to 2.3.12</a></li>
         
             <li><a class="toctree-l3" href="#upgrade-to-2311">Upgrade to 2.3.11</a></li>
@@ -113,6 +115,11 @@
     </ul>
 	    </li>
           
+            <li class="toctree-l1">
+		
+    <a class="" href="../gdpr_compliance/">GDPR Compliance</a>
+	    </li>
+          
         </ul>
       </div>
       &nbsp;
@@ -148,6 +155,8 @@
                 <h1 id="migration-guide">Migration guide</h1>
 <p>Please refer to each individual version step when migrating to a newer SDK. The SDK uses <a href="http://semver.org/">Semantic Versioning</a></p>
 <p>The <a href="./">Integration Guide</a> always describes the most up-to-date integration requirements.</p>
+<h2 id="upgrade-to-2315">Upgrade to 2.3.15</h2>
+<p>Starting with 2.3.15, you MUST request GDPR consentement from the application user. If not, the application will only send a minimal data set and will not send notification to the user. Please consult the GDPR page of the documentation.</p>
 <h2 id="upgrade-to-2312">Upgrade to 2.3.12</h2>
 <p>Previously, the properties by.neer.sdk.AUTOSTART and by.neer.sdk.DISABLE_AUTOMATIC_INIT should be set to manage sdk activation. Starting with 2.3.12 these keys are deprecated and should not be used anymore.
 The reason is that they can prevent SDK to work flawlessly with Android versions starting with 8.0.</p>
@@ -287,6 +296,8 @@ tools:ignore=&quot;ExportedService&quot;&gt;
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="../gdpr_compliance/" class="btn btn-neutral float-right" title="GDPR Compliance">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
       
         <a href="../using_the_sdk/" class="btn btn-neutral" title="Using the SDK"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
@@ -316,6 +327,8 @@ tools:ignore=&quot;ExportedService&quot;&gt;
       
         <span><a href="../using_the_sdk/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
+      
+        <span style="margin-left: 15px"><a href="../gdpr_compliance/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
