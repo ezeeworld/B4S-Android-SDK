@@ -71,6 +71,8 @@
     
         <ul>
         
+            <li><a class="toctree-l3" href="#upgrade-to-240">Upgrade to 2.4.0</a></li>
+        
             <li><a class="toctree-l3" href="#upgrade-to-2315">Upgrade to 2.3.15</a></li>
         
             <li><a class="toctree-l3" href="#upgrade-to-2312">Upgrade to 2.3.12</a></li>
@@ -155,6 +157,8 @@
                 <h1 id="migration-guide">Migration guide</h1>
 <p>Please refer to each individual version step when migrating to a newer SDK. The SDK uses <a href="http://semver.org/">Semantic Versioning</a></p>
 <p>The <a href="./">Integration Guide</a> always describes the most up-to-date integration requirements.</p>
+<h2 id="upgrade-to-240">Upgrade to 2.4.0</h2>
+<p>Now User properties must be associated with a boolean in order to specify if it has to be sent to our server or not.</p>
 <h2 id="upgrade-to-2315">Upgrade to 2.3.15</h2>
 <p>Starting with 2.3.15, you MUST request GDPR consentement from the application user. If not, the application will only send a minimal data set and will not send notification to the user. Please consult the GDPR page of the documentation.</p>
 <h2 id="upgrade-to-2312">Upgrade to 2.3.12</h2>

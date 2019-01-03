@@ -225,10 +225,11 @@ if (activateSdk) {
 
 <h1 id="recording-user-data">Recording user data</h1>
 <p>Neerby can relate events to individual customers. Supplying the customer details is typically done on startup and/or after a user signed in to his/her account. In these cases you can update te SDK with this customer data (which is persisted; no need to call this every time). The key should use reverse-dns-like notation to be used as a domain. For instance, the user hometown should use a "user.hometown" key. A few keys are provided (Firstname, lastname, gender...)</p>
-<pre><code class="java">B4SUserProperty.get().store(B4SUserProperty.USER_FIRST_NAME, &quot;Jean-Michel&quot;);
-B4SUserProperty.get().store(B4SUserProperty.USER_LAST_NAME, &quot;Bécatresse&quot;);
-B4SUserProperty.get().store(B4SUserProperty.USER_GENDER, B4SUserProperty.Gender.Male);
-B4SUserProperty.get().store(&quot;user.hometown&quot;, &quot;Tubbydome&quot;);
+<p>When the last parameter is set to false, the key/value is uploaded to our server. Uploaded key/values can be used to target users on interactions.</p>
+<pre><code class="java">B4SUserProperty.get().store(B4SUserProperty.USER_FIRST_NAME, &quot;Jean-Michel&quot;, false);
+B4SUserProperty.get().store(B4SUserProperty.USER_LAST_NAME, &quot;Bécatresse&quot;, false);
+B4SUserProperty.get().store(B4SUserProperty.USER_GENDER, B4SUserProperty.Gender.Male, true);
+B4SUserProperty.get().store(&quot;user.hometown&quot;, &quot;Tubbydome&quot;, true);
 </code></pre>
 
 <h1 id="application-tagging">Application tagging</h1>
