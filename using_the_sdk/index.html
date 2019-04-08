@@ -95,7 +95,10 @@
     <li class="toctree-l2"><a href="#using-a-transient-device-uuid">Using a transient device UUID</a></li>
     
 
-    <li class="toctree-l2"><a href="#getting-the-users-worlplace-and-home-coordinates">Getting the user's worlplace and home coordinates</a></li>
+    <li class="toctree-l2"><a href="#getting-the-users-workplace-and-home-coordinates">Getting the user's workplace and home coordinates</a></li>
+    
+
+    <li class="toctree-l2"><a href="#getting-info-about-the-nearest-beacon">Getting info about the nearest beacon</a></li>
     
 
     </ul>
@@ -403,7 +406,7 @@ public String modifyNotificationMessage(Bundle extras) {
 <pre><code class="xml">&lt;meta-data android:name=&quot;by.neer.sdk.USE_TRANSIENT_DEVICEID&quot; android:value=&quot;true&quot; /&gt;
 </code></pre>
 
-<h1 id="getting-the-users-worlplace-and-home-coordinates">Getting the user's worlplace and home coordinates</h1>
+<h1 id="getting-the-users-workplace-and-home-coordinates">Getting the user's workplace and home coordinates</h1>
 <p>The SDK tries to determinate the user's home &amp; workplace coordinate. When accessing those, home and workplace coordinates should be null if the SDK still do not collect enough information to identify the customer home and workplace locations.</p>
 <pre><code class="java">
 Location home = B4SSettings.get().userHomeCoordinates();
@@ -416,6 +419,18 @@ if (work != null)
 {
     // Use the coordinates
 }
+
+</code></pre>
+
+<h1 id="getting-info-about-the-nearest-beacon">Getting info about the nearest beacon</h1>
+<pre><code class="java">
+IBeaconData beaconData = SessionManager.get(null).getNearestBeacon();
+// Some properties that can be retrieved
+beaconData.getDistance();
+beaconData.getID().getInnerName();
+beaconData.getID().getUuid();
+beaconData.getID().getMajor();
+beaconData.getID().getMinor();
 
 </code></pre>
               
