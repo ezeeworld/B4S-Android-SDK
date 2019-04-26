@@ -236,16 +236,13 @@ B4SUserProperty.get().store(&quot;user.hometown&quot;, &quot;Tubbydome&quot;, tr
 </code></pre>
 
 <h1 id="application-tagging">Application tagging</h1>
-<p>You can tag your application with the B4S SDK. You can set two values : The first parameter is the event descriptor and the second the userData asociated to the event. </p>
-<pre><code class="java">B4S.event(&quot;Launch&quot;,&quot;No Data&quot;);
-</code></pre>
-
-<p>You can even set your own data dictionary.</p>
-<pre><code class="java">Hashtable tags = new Hashtable();
-tags.put(&quot;Key1&quot;,&quot;String1&quot;);
-tags.put(&quot;Key2&quot;,&quot;String2&quot;);
-tags.put(&quot;Key3&quot;,4);
-B4STag.event(&quot;Test&quot;, tags);
+<p>You can tag your application with the B4S SDK. You have to specify 2 informations :
+• A tag type
+• A data dictionnary with the datas associated to your tag.</p>
+<pre><code class="java">HashMap&lt;String, Object&gt; hmap = new HashMap();
+hmap.put(&quot;Key1&quot;, &quot;String1&quot;);
+hmap.put(&quot;Key2&quot;, 123);
+NeerbyTag.newEvent(getApplicationContext(), &quot;UserNavigation&quot;, hmap, true);
 </code></pre>
 
 <h1 id="custom-notifications">Custom notifications</h1>
@@ -261,12 +258,86 @@ B4SSettings.get().enableNotificationSound();
 
 <h1 id="push-notifications">Push notifications</h1>
 <p><em>To use remote push notifications you must first follow the instructions of the "Base integration"</em></p>
-<p>To use remote push messaging with the Neerby SDK, ensure that the <code>play-services-gcm</code> library is properly specified in your <code>app/build.gradle</code> dependencies:</p>
+<p>To use remote push messaging with the Neerby SDK, ensure that the <code>firebase-messaging</code> library is properly specified in your <code>app/build.gradle</code> dependencies:</p>
 <pre><code class="groovy">{
-    compile 'com.google.android.gms:play-services-gcm:10.2.6'
+    implementation 'com.google.firebase:firebase-messaging:17.6.0'
 }
 </code></pre>
 
+<p>...and init the 'google-services' plugin too :</p>
+<pre><code class="groovy">{
+    apply plugin: 'com.google.gms.google-services'
+}
+</code></pre>
+
+<p>Add the following class to your project. This class handle events from Firebase Messaging and transmits them to the Neerby SDK.</p>
+<pre><code class="java">package x.y.z.myapp;
+
+import android.app.Activity;
+import android.content.Context;
+
+import com.ezeeworld.b4s.android.sdk.B4SLog;
+import com.ezeeworld.b4s.android.sdk.push.PushApi;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
+
+public class NeerByFirebaseMessagingService extends FirebaseMessagingService {
+    private final static String TAG = &quot;PushApi&quot;;
+
+    @Override
+    public void onNewToken(String newToken) {
+        super.onNewToken(newToken);
+
+        PushApi.registerFirebaseToken(newToken);
+    }
+
+    @Override
+    public void onMessageReceived(RemoteMessage remoteMessage) {
+        super.onMessageReceived(remoteMessage);
+
+        PushApi.onMessageReceived(getApplicationContext(), remoteMessage.getData());
+    }
+
+    public static void initFirebase(Activity activity) {
+        try {
+            FirebaseApp.initializeApp(activity);
+        } catch (Exception e) {
+            B4SLog.e(&quot;PushAPI&quot;, &quot;FirebaseApp init failed:&quot;+e.toString());
+            e.printStackTrace();
+        }
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( activity,  new OnSuccessListener&lt;InstanceIdResult&gt;() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String newToken = instanceIdResult.getToken();
+                PushApi.registerFirebaseToken(newToken);
+            }
+        });
+    }
+}
+</code></pre>
+
+<p>Add the following declaration in your application AndroidManifest.xml</p>
+<pre><code class="groovy">&lt;service
+    android:name=&quot;.NeerByFirebaseMessagingService&quot;
+    android:stopWithTask=&quot;false&quot;
+    android:exported=&quot;false&quot;&gt;
+    &lt;intent-filter&gt;
+        &lt;action android:name=&quot;com.google.firebase.MESSAGING_EVENT&quot; /&gt;
+    &lt;/intent-filter&gt;
+&lt;/service&gt;
+</code></pre>
+
+<p>Finally, add the folowing line to initialize Firebase messaging. Typically, it can be done in your Main Activity class.</p>
+<pre><code class="java">NeerByFirebaseMessagingService.initFirebase(this);
+</code></pre>
+
+<p>Important, do not forget to add your 'google-services.json' in your application source path. You will generate this file from the Firebase console at : https://console.firebase.google.com in Project Overview &gt;Parameters (General tab).
+Next, you will have to record the legacy server key (Cloud Messageing tab) in the Neerby web interface (application settings).</p>
 <h2 id="deep-linking">Deep linking</h2>
 <p>Notifications such as web links or simple messages are handled directly by the SDK. For deep linking (and deep linking only), there are three options:</p>
 <ul>
