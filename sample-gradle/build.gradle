@@ -2,22 +2,32 @@
 
 buildscript {
     repositories {
-        jcenter()
         mavenCentral()
+        jcenter()
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath 'com.android.tools.build:gradle:3.4.0'
+        classpath 'com.google.gms:google-services:4.2.0'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
     }
 }
 
 allprojects {
     repositories {
+        maven { url "https://maven.google.com/"}
         jcenter()
         flatDir{
             dirs 'libs'
         }
-        maven { url 'https://maven.google.com' }
         maven { url "http://maven.ezeeworld.com:8081/artifactory/libs-release-local" }
     }
+
+}
+
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }

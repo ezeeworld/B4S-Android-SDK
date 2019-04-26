@@ -9,9 +9,14 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import java.util.HashMap;
+
 import com.ezeeworld.b4s.android.sample.R;
+import com.ezeeworld.b4s.android.sdk.B4SLog;
 import com.ezeeworld.b4s.android.sdk.B4SSettings;
+import com.ezeeworld.b4s.android.sdk.Device;
 import com.ezeeworld.b4s.android.sdk.notifications.NotificationService;
+import com.ezeeworld.b4s.android.sdk.monitor.NeerbyTag;
 
 public class LaunchActivity extends Activity {
     public static final int PERMISSIONS_REQUEST_LOCATION = 1799;
@@ -25,6 +30,8 @@ public class LaunchActivity extends Activity {
 			String actionId = getIntent().getStringExtra(NotificationService.INTENT_ACTIONID);
 			// TODO Do something with the action ID, such as start an activity for a specific product
 		}
+
+		NeerByFirebaseMessagingService.initFirebase(this);
 	}
 
 	@Override
@@ -44,6 +51,17 @@ public class LaunchActivity extends Activity {
 	        {
 	            Log.d("B4S", "Main::OnResume work="+work.toString());
 	        }
+
+	        int counter=1;
+	        HashMap<String, Object> hmap = new HashMap();
+            hmap.put("Key1", "LAST");
+            hmap.put("Counter", counter++);
+            try {
+                NeerbyTag.newEvent(getApplicationContext(), "albedo", hmap,  true);
+            } catch(Exception e) {
+                B4SLog.e("B4S", "Exception e:"+e.toString());
+                e.printStackTrace();
+            }
     	}
     }
 

@@ -3,6 +3,9 @@ package com.ezeeworld.b4s.android.sdk.sample;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+
+import com.ezeeworld.b4s.android.sdk.notifications.NotificationService;
 
 public class DeepLinkReceiver extends BroadcastReceiver {
 
