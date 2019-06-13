@@ -101,6 +101,9 @@
     <li class="toctree-l2"><a href="#getting-info-about-the-nearest-beacon">Getting info about the nearest beacon</a></li>
     
 
+    <li class="toctree-l2"><a href="#detect-presence-inside-a-location-registered-on-the-backoffice">Detect presence inside a location registered on the backoffice</a></li>
+    
+
     </ul>
 	    </li>
           
@@ -504,6 +507,34 @@ beaconData.getID().getMajor();
 beaconData.getID().getMinor();
 
 </code></pre>
+
+<h1 id="detect-presence-inside-a-location-registered-on-the-backoffice">Detect presence inside a location registered on the backoffice</h1>
+<ul>
+<li>Rely on geolocation only</li>
+</ul>
+<pre><code class="java">Shop shop = B4SSettings.get().currentShopWithGeolocation();
+if (shop != null) {
+    Log.d(&quot;B4S&quot;,&quot;You are near=&quot;+shop.sName);
+}
+</code></pre>
+
+<ul>
+<li>If you have deployed Neerbies in your locations</li>
+</ul>
+<pre><code class="java">Shop shop = B4SSettings.get().currentShopWithBeacons();
+if (shop != null) {
+    Log.d(&quot;B4S&quot;,&quot;You are near=&quot;+shop.sName);
+}
+</code></pre>
+
+<p>Both methods return a Shop class instance with the following properties available :
+• sName : Location name
+• sZipCode : Location zipcode 
+• sCity : Location city
+• sCountry : Location country
+• sClientRef : Your location own reference
+• nLongitude : Location longitude
+• nLatitude : Location latitude</p>
               
             </div>
           </div>
