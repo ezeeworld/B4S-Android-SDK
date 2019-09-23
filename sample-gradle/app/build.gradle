@@ -14,15 +14,15 @@ buildscript {
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion "28.0.3"
 
     defaultConfig {
         applicationId "com.ezeeworld.b4s.android.sample"
         minSdkVersion 26
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 240
-        versionName "2.4.2"
+        versionName "2.5.2"
     }
     buildTypes {
         release {
@@ -38,6 +38,9 @@ android {
             exclude 'META-INF/LICENSE'
             exclude 'META-INF/NOTICE'
         }
+    }
+    lintOptions {
+        abortOnError false
     }
 }
 
@@ -57,8 +60,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:17.6.0'
     implementation 'com.google.zxing:core:3.3.2'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0@aar'
-    implementation 'by.neer.sdk:nby-playservices-support1501:2.4.5@aar'
-    implementation 'by.neer.sdk:nby-sdk:2.4.5@aar'
+    implementation 'by.neer.sdk:nby-playservices-support1501:2.5.2@aar'
+    implementation 'by.neer.sdk:nby-sdk:2.5.2@aar'
     //implementation(name: 'b4s-android-sdk', ext: 'aar')
     //implementation(name: 'b4s-android-sdk-playservices1501', ext: 'aar')
 }
