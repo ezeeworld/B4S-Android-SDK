@@ -71,6 +71,8 @@
     
         <ul>
         
+            <li><a class="toctree-l3" href="#upgrade-to-254">Upgrade to 2.5.4</a></li>
+        
             <li><a class="toctree-l3" href="#upgrade-to-250">Upgrade to 2.5.0</a></li>
         
             <li><a class="toctree-l3" href="#upgrade-to-246">Upgrade to 2.4.6</a></li>
@@ -168,6 +170,17 @@
                 <h1 id="migration-guide">Migration guide</h1>
 <p>Please refer to each individual version step when migrating to a newer SDK. The SDK uses <a href="http://semver.org/">Semantic Versioning</a></p>
 <p>The <a href="./">Integration Guide</a> always describes the most up-to-date integration requirements.</p>
+<h2 id="upgrade-to-254">Upgrade to 2.5.4</h2>
+<p>Starting with Android 10, ACCESS_BACKGROUND_LOCATION permission is now declared as a default in the SDK Manifest.
+So with a target SDK &gt;= 29, location permission is now available when the application is in background.
+If you do not want to enable this permission, insert the following code in your application Manifest.</p>
+<pre><code class="groovy">&lt;manifest ... xmlns:tools=&quot;http://schemas.android.com/tools&quot;&gt;
+    ...
+    &lt;uses-permission android:name=&quot;android.permission.ACCESS_BACKGROUND_LOCATION&quot; tools:node=&quot;remove&quot;/&gt;
+    ...
+&lt;/manifest&gt;
+</code></pre>
+
 <h2 id="upgrade-to-250">Upgrade to 2.5.0</h2>
 <p>Unified method to get current shop</p>
 <h2 id="upgrade-to-246">Upgrade to 2.4.6</h2>
